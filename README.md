@@ -4,5 +4,6 @@
 2. change the directory to the repo you cloned
 3. install the modules using the command ( npm install )  
 4. run the project using the command ( npm run start:dev )
+5. type this url http://localhost:3000/ on your browser to see the project
 # Note
 please do not include the parenthesis ( ) when typing the commands
