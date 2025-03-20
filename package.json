@@ -1,0 +1,37 @@
+{
+  "name": "term-project-uno-reverse",
+  "version": "1.0.0",
+  "description": "Uno Multiplayer game",
+  "scripts": {
+    "start": "ts-node src/server/index.ts",
+    "start:dev": "nodemon --exec ts-node src/server/index.ts",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
+    "@types/express": "^5.0.1",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.13.10",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.5.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^5.0.1",
+    "http-errors": "^2.0.0",
+    "morgan": "^1.10.0"
+  },
+
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  }
+}
