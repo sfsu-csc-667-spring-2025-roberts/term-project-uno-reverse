@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Uno Multiplayer game",
   "scripts": {
-    "start": "ts-node src/server/index.ts",
-    "start:dev": "nodemon --exec ts-node src/server/index.ts",
+    "start": "ts-node src/server/app.ts",
+    "start:dev": "nodemon --exec ts-node src/server/app.ts",
     "prepare": "husky"
   },
   "keywords": [],
