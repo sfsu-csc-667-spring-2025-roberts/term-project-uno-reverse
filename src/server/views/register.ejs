@@ -15,7 +15,52 @@
 
 <body>
     <div class="container-fluid">
+        <div id="forms">
+            <div id="signin-form">
+                <h1>Welcome Back!</h1>
+                <p id="statement">To play uno with others please sign in with your personal info</p>
+                <a href="/login">
+                    <button id="signin">SIGN IN</button>
+                </a>
+            </div>
 
+            <form id="signup-form">
+                <div id="form-container">
+                    <h1 id="signup-heading" class="mb-3">Create Account</h1>
+                    <!-- full name input -->
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-default" name="full-name" placeholder="Full Name"
+                            required />
+                    </div>
+
+                    <!-- username input -->
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-default" name="username" placeholder="Username"
+                            required />
+                    </div>
+
+                    <!-- password input -->
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-default" name="password" placeholder="Password"
+                            required />
+                    </div>
+
+                    <!-- confirm password input -->
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-default" name="confirm-password"
+                            placeholder="Confirm Password" required />
+                    </div>
+
+                    <button id="signup">SIGN UP</button>
+
+                    <a href="/" id="home" class="mb-3">Home</a>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- Bootstrap javascript link -->

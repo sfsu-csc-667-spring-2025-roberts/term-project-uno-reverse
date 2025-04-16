@@ -79,7 +79,7 @@ body {
 }
 
 #signup,
-#login {
+#signin {
     width: 250px;
     border: none;
     padding: 8px;
@@ -87,7 +87,7 @@ body {
     color: #fefefe;
 }
 
-#login {
+#signin {
     background: hsla(24, 100%, 42%, 1);
     background: linear-gradient(180deg, hsla(24, 100%, 42%, 1) 0%, hsla(341, 91%, 68%, 1) 100%);
     background: -moz-linear-gradient(180deg, hsla(24, 100%, 42%, 1) 0%, hsla(341, 91%, 68%, 1) 100%);

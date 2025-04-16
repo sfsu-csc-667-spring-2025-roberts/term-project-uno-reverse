@@ -18,21 +18,23 @@
         <div id="forms">
             <form id="login-form">
                 <div id="form-container">
-                    <h1 id="login-heading" class="mb-3">Login</h1>
+                    <h1 id="login-heading" class="mb-3">Sign In</h1>
                     <!-- username input -->
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default" name="username" placeholder="Username" />
+                            aria-describedby="inputGroup-sizing-default" name="username" placeholder="Username"
+                            required />
                     </div>
 
                     <!-- password input -->
                     <div class="input-group mb-3">
                         <input type="password" class="form-control" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default" name="password" placeholder="Password">
+                            aria-describedby="inputGroup-sizing-default" name="password" placeholder="Password"
+                            required />
                     </div>
 
                     <a href="#" id="forgot-password" class="mb-3">Forgot your password?</a>
-                    <button id="login">LOGIN</button>
+                    <button id="signin">SIGN IN</button>
 
                     <a href="/" id="home" class="mb-3">Home</a>
                 </div>
@@ -41,7 +43,9 @@
             <div id="registration-form">
                 <h1>Hello, Friend!</h1>
                 <p id="statement">Enter your personal details and start playing uno with others</p>
-                <button id="signup">SIGN UP</button>
+                <a href="/register">
+                    <button id="signup">SIGN UP</button>
+                </a>
             </div>
         </div>
     </div>
