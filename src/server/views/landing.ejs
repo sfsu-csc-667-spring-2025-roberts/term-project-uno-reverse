@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uno Multiplayer Game</title>
-    <link rel="stylesheet" href="/css/landing.css" type="text/css" />
-    <!-- Bootstrap css link -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-</head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Uno Reverse</title>
 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/landing.css" />
+</head>
 <body>
-    <!-- Header and Navigation bar -->
-    <header class="mb-auto">
-        <div class="container">
-            <h3 class="float-md-start mb-0">
-                <a class="nav-link link-light" href="/">
-                    <%= page.logo %>
-                </a>
-            </h3>
-            <nav class="nav nav-masthead justify-content-center float-md-end">
-                <a class="nav-link link-light fw-bold py-2 px-2" href="/login">
-                    <%= page.login %>
-                </a>
-                <a class="nav-link link-light fw-bold py-2 px-2" href="/register">
-                    <%= page.register %>
-                </a>
-            </nav>
+
+    <!-- Transparent Navbar -->
+    <header class="position-absolute top-0 start-0 w-100 z-3 px-4 py-3 d-flex justify-content-between align-items-center">
+        <div class="text-white fw-bold fs-4">
+            Uno Reverse
         </div>
     </header>
-    <div id="game_lobby">
-        <img src="./images/uno-cards-image.png" alt="Image of Uno Cards" id="cards_image" title="" />
-    </div>
 
-    <!-- Bootstrap javascript link -->
+    <!-- Game Lobby Section -->
+    <main id="game_lobby" class="d-flex flex-column align-items-center justify-content-center text-center">
+        <img src="/images/uno-cards-image.png" alt="UNO Logo" id="cards_image" />
+
+        <!-- Action Buttons -->
+        <div class="mt-4">
+            <a href="/login" class="btn btn-warning btn-lg mx-2 rounded-pill px-4">Log In</a>
+            <a href="/register" class="btn btn-danger btn-lg mx-2 rounded-pill px-4">Register</a>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-        crossorigin="anonymous"></script>
+            integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+            crossorigin="anonymous"></script>
 </body>
-
 </html>
