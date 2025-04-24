@@ -2,33 +2,20 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap css link -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title><%= page_name %></title>
+
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous" />
-    <link rel="stylesheet" type="text/css" href="/css/forgot.css" />
-    <title>
-        <%= page_name %>
-    </title>
+          integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/forgot.css" />
 </head>
 
 <body>
-    <div class="container-fluid">
-        <!-- Navigation -->
-        <header>
-            <div class="d-flex flex-column flex-md-row align-items-center pb-0 mb-4 border-bottom container">
-                <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
-                    <!-- <span class="fs-4">Uno Reverse</span> -->
-                </a>
-
-                <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-                    <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/register">Register</a>
-                    <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/login">Login</a>
-                </nav>
-            </div>
-        </header>
-
+    <div class="container-fluid d-flex align-items-center justify-content-center" style="min-height: 100vh;">
         <div id="forms">
             <form id="forgot-form">
                 <div id="forgot-form-container">
@@ -36,29 +23,33 @@
                     <p id="forgot-password-statement">
                         Type your email address and new password, so we can reset your password.
                     </p>
-                    <!-- email input -->
+
+                    <!-- Email -->
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default" name="email" placeholder="Email" required />
+                        <input type="email" class="form-control" name="email" placeholder="Email" required />
                     </div>
 
-                    <!-- new password input -->
+                    <!-- New Password -->
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default" name="password" placeholder="Your new password"
-                            required />
+                        <input type="password" class="form-control" name="password" placeholder="Your new password" required />
                     </div>
 
-                    <button id="reset-password">Reset My Password</button>
+                    <!-- Reset Button -->
+                    <button id="reset-password" type="submit">Reset My Password</button>
+
+                    <!-- New: Register & Login Links -->
+                    <div class="mt-4 d-flex justify-content-center gap-3">
+                        <a href="/register" class="text-decoration-none">Register</a>
+                        <a href="/login" class="text-decoration-none">Login</a>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Bootstrap javascript link -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-        crossorigin="anonymous"></script>
+            integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 </body>
 
 </html>
