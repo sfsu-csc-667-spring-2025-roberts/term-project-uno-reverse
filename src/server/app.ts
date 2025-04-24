@@ -2,6 +2,7 @@ import express from "express";
 import indexRoutes from './routes/landing';
 import loginRoutes from './routes/login';
 import registerRoutes from './routes/register';
+import forgotRoutes from './routes/forgot';
 
 import path from "path";
 import httpErrors from "http-errors";
@@ -28,6 +29,7 @@ app.set("view engine", "ejs");
 app.use("/", indexRoutes);      // route for landing page
 app.use('/', loginRoutes)       // route for login page
 app.use('/', registerRoutes)    // route for registration page
+app.use('/', forgotRoutes)      // route for forgot page
 dotenv.config();
 
 app.listen(PORT, () => { 

@@ -10,20 +10,24 @@ body {
 
 .container-fluid {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100vw;
     height: 100vh;
+    border: 1px solid black;
 }
 
 #forms {
     display: flex;
+    width: 500px;
     flex-direction: row;
     justify-content: center;
     backdrop-filter: blur(10px);
     background-color: rgba(255, 255, 255, 0.75);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
     border-radius: 16px;
+    padding: 20px;
 }
 
 #forms {
@@ -39,86 +43,41 @@ body {
     margin: auto;
 }
 
-#forgot-password {
-    text-decoration: none;
+#forgot-password-statement {
     color: #171717;
     display: block;
     text-align: center;
+    width: 400px;
 }
 
-#login-form {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-#login-form>#form-container {
-    padding: 15px;
-}
-
-#registration-form {
-    padding: 20px;
+#forgot-heading {
+    font-weight: bold;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #ff4b2b;
-    color: #fefefe;
-    border-top-right-radius: 16px;
-    border-bottom-right-radius: 16px;
 }
 
-#login-form,
-#registration-form {
-    width: 500px;
+#app-name {
     text-align: center;
-    height: 500px;
 }
 
-#signup,
-#signin {
+#app-name>a {
+    text-decoration: none;
+    color: #825de6;
+}
+
+#reset-password {
+    display: block;
     width: 250px;
     border: none;
     padding: 10px;
     border-radius: 8px;
     color: #fefefe;
+    margin: auto;
 }
 
-#signin {
+#reset-password {
     background: hsla(24, 100%, 42%, 1);
     background: linear-gradient(180deg, hsla(24, 100%, 42%, 1) 0%, hsla(341, 91%, 68%, 1) 100%);
     background: -moz-linear-gradient(180deg, hsla(24, 100%, 42%, 1) 0%, hsla(341, 91%, 68%, 1) 100%);
     background: -webkit-linear-gradient(180deg, hsla(24, 100%, 42%, 1) 0%, hsla(341, 91%, 68%, 1) 100%);
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#D75600", endColorstr="#F86594", GradientType=1);
-}
-
-#signup {
-    border: 1px solid #fefefe;
-    background-color: #ff4b2b;
-}
-
-#statement {
-    width: 300px;
-    margin-top: 20px;
-    margin-bottom: 30px;
-}
-
-header {
-    padding: 20px;
-    overflow: hidden;
-    background-color: #e1480d;
-    color: #000000;
-}
-
-#home {
-    display: block;
-    position: relative;
-    width: 60px;
-    margin: auto;
-    top: 100px;
-    text-decoration: none;
-    padding: 2px;
 }
