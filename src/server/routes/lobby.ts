@@ -1,0 +1,10 @@
+import { Router } from "express";
+const router = Router()
+
+// route for login.html
+router.get("/lobby", (req, res) => {
+    const page_name = 'Game Lobby';
+    res.render('lobby', { page_name });
+});
+
+export default router

@@ -3,6 +3,7 @@ import indexRoutes from './routes/landing';
 import loginRoutes from './routes/login';
 import registerRoutes from './routes/register';
 import forgotRoutes from './routes/forgot';
+import lobbyRoutes from './routes/lobby';
 
 import path from "path";
 import httpErrors from "http-errors";
@@ -26,11 +27,12 @@ app.set("views", path.join(process.cwd(), "src", "server", "views"));
 app.set("view engine", "ejs");
 
 // Routes [ *** add your routes here *** ]
-app.use("/", indexRoutes);      // route for landing page
-app.use('/', loginRoutes)       // route for login page
-app.use('/', registerRoutes)    // route for registration page
-app.use('/', forgotRoutes)      // route for forgot page
-dotenv.config();
+app.use("/", indexRoutes);          // route for landing page
+app.use('/', loginRoutes);          // route for login page
+app.use('/', registerRoutes);       // route for registration page
+app.use('/', forgotRoutes);         // route for forgot page
+app.use('/', lobbyRoutes);          // route for game lobby
+dotenv.config();        
 
 app.listen(PORT, () => { 
     console.log(`Server is running on http://localhost:${PORT}`);

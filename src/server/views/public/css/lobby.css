@@ -1,0 +1,22 @@
+.navbar {
+    margin-bottom: 60px;
+}
+
+#gamename,
+#gamepassword {
+    width: 500px;
+}
+
+#form {
+    border: 1px solid #f0e7e7;
+    width: 500px;
+    padding: 20px;
+    border-radius: 7px;
+    box-sizing: content-box;
+    margin: auto;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
