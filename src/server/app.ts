@@ -1,4 +1,5 @@
 import express from "express";
+import authRoutes from './routes/authRoutes';
 import indexRoutes from './routes/landing';
 import loginRoutes from './routes/login';
 import registerRoutes from './routes/register';
@@ -32,6 +33,7 @@ app.use('/', loginRoutes);          // route for login page
 app.use('/', registerRoutes);       // route for registration page
 app.use('/', forgotRoutes);         // route for forgot page
 app.use('/', lobbyRoutes);          // route for game lobby
+app.use("/api/auth", authRoutes);  
 dotenv.config();        
 
 app.listen(PORT, () => { 
