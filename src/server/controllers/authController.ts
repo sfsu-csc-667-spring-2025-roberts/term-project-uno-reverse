@@ -1,7 +1,8 @@
-import { Request, Response } from 'express'
-import pool from '../db'
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
+import { Request, RequestHandler, Response } from 'express'
+// import pool from '../db'
+import pool from '../config/db'
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 interface User {
   id: number
@@ -10,11 +11,11 @@ interface User {
   password?: string
 }
 
-export const register = async (req: Request, res: Response): Promise<Response> => {
+export const register = async (req: Request, res: Response): Promise<void> => {
   const { username, email, password } = req.body
 
   if (!username || !email || !password) {
-    return res.status(400).json({ message: 'All fields are required.' })
+    res.status(400).json({ message: 'All fields are required.' })
   }
 
   try {
@@ -25,18 +26,18 @@ export const register = async (req: Request, res: Response): Promise<Response> =
     )
 
     const user: User = result.rows[0]
-    return res.status(201).json(user)
+    res.status(201).json(user)
   } catch (error) {
     console.error(error)
-    return res.status(500).json({ message: 'Error registering user.' })
+    res.status(500).json({ message: 'Error registering user.' })
   }
 }
 
-export const login = async (req: Request, res: Response): Promise<Response> => {
+export const login = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body
 
   if (!email || !password) {
-    return res.status(400).json({ message: 'All fields are required.' })
+    res.status(400).json({ message: 'All fields are required.' })
   }
 
   try {
@@ -44,13 +45,13 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
     const user: User = result.rows[0]
 
     if (!user) {
-      return res.status(401).json({ message: 'Invalid credentials.' })
+      res.status(401).json({ message: 'Invalid credentials.' })
     }
 
     const match = await bcrypt.compare(password, user.password!)
 
     if (!match) {
-      return res.status(401).json({ message: 'Invalid credentials.' })
+      res.status(401).json({ message: 'Invalid credentials.' })
     }
 
     const token = jwt.sign(
@@ -59,9 +60,9 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
       { expiresIn: '1h' }
     )
 
-    return res.json({ token, user: { id: user.id, username: user.username, email: user.email } })
+    res.json({ token, user: { id: user.id, username: user.username, email: user.email } })
   } catch (error) {
     console.error(error)
-    return res.status(500).json({ message: 'Error logging in.' })
+    res.status(500).json({ message: 'Error logging in.' })
   }
 }

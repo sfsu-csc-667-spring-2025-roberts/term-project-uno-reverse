@@ -34,6 +34,7 @@ app.use('/', registerRoutes);       // route for registration page
 app.use('/', forgotRoutes);         // route for forgot page
 app.use('/', lobbyRoutes);          // route for game lobby
 app.use("/api/auth", authRoutes);  
+
 dotenv.config();        
 
 app.listen(PORT, () => { 
