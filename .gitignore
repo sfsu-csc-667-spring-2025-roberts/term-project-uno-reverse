@@ -1,2 +1,3 @@
 node_modules/uni
-.env
+.env/
+node_modules/
