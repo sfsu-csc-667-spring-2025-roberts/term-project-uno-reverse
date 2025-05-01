@@ -6,128 +6,143 @@ body {
     min-height: 100vh;
     margin: 0;
     padding-bottom: 2rem;
-}
-
-/* Navbar */
-.navbar {
+  }
+  
+  .container {
+    max-width: 960px;
+    margin: auto;
+  }
+  
+  /* Navbar */
+  .navbar {
     background-color: #000;
     color: #fff;
     padding: 1rem;
     border-radius: 10px;
-}
-
-.navbar .navbar-brand {
+  }
+  
+  .navbar .navbar-brand {
     font-size: 1.5rem;
     color: #fff;
     font-weight: bold;
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
-}
-
-/* Tabs */
-.nav-tabs .nav-link {
+  }
+  
+  .avatar-badge {
+    background-color: #34495e;
+    color: #fff;
+    border-radius: 50%;
+    padding: 0.4rem 0.6rem;
+    font-weight: bold;
+  }
+  
+  /* Tabs */
+  .nav-tabs .nav-link {
     font-weight: 600;
     color: #333;
     border: none;
     transition: 0.3s;
-}
-
-.nav-tabs .nav-link.active {
+  }
+  
+  .nav-tabs .nav-link.active {
     color: #fff;
     background-color: #e74c3c;
     border-radius: 20px;
-}
-
-/* Table */
-.table thead th {
-    color: #2c3e50;
-    font-size: 1.1rem;
-}
-
-.table td,
-.table th {
-    vertical-align: middle;
-}
-
-.avatar {
-    display: inline-block;
-    width: 35px;
-    height: 35px;
-    background-color: #2c3e50;
-    border-radius: 50%;
-    margin-right: 8px;
-    position: relative;
-}
-
-.avatar-badge {
-    width: 35px;
-    height: 35px;
-    background-color: #34495e;
-    color: #fff;
-    border-radius: 100%;
-    padding: 0.4rem 0.6rem;
-    font-weight: bold;
-    position: absolute;
-    left: 0;
-}
-
-.nav-item>.avatar>.avatar-badge {
+  }
+  
+  /* Uno Match List */
+  .match-list {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .match-card {
+    display: flex;
     align-items: center;
-    justify-content: center;
-}
-
-/* Join Button */
-.btn-primary {
+    justify-content: space-between;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    transition: transform 0.2s ease;
+  }
+  
+  .match-card:hover {
+    transform: scale(1.01);
+  }
+  
+  .match-avatar {
+    width: 42px;
+    height: 42px;
+    background-color: #2c3e50;
+    border-radius: 50%;
+    margin-right: 1rem;
+  }
+  
+  .match-info {
+    flex-grow: 1;
+    padding-left: 1rem;
+  }
+  
+  .match-info h5 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .match-info p {
+    margin: 0.2rem 0 0;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .match-action {
+    display: flex;
+    align-items: center;
+  }
+  
+  .btn-join {
     background-color: #27ae60;
+    color: white;
+    font-weight: bold;
     border: none;
+    padding: 0.5rem 1.2rem;
     border-radius: 25px;
-    padding: 6px 16px;
-    font-weight: bold;
-    transition: 0.3s ease;
-}
-
-.btn-primary:hover {
+    transition: background 0.3s ease;
+  }
+  
+  .btn-join:hover {
     background-color: #219150;
-    transform: scale(1.05);
-}
-
-/* Game Settings Heading */
-.game-setting-heading {
-    text-align: center;
-    color: #fff;
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-}
-
-/* Create Game Form */
-#form {
+  }
+  
+  /* Create Game Form */
+  #form {
     background-color: rgba(255, 255, 255, 0.95);
     padding: 2rem;
     border-radius: 16px;
     max-width: 600px;
-    margin: auto;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-#form input,
-#form select {
+    margin: 2rem auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  #form input,
+  #form select {
     font-size: 1rem;
     padding: 0.75rem 1rem;
     border-radius: 12px;
-    margin-bottom: 1rem;
-}
-
-#form .form-check {
-    margin-right: 1rem;
-}
-
-#form label {
+  }
+  
+  #form .form-check-label {
     font-weight: 500;
-}
-
-#form .btn {
+  }
+  
+  #form .btn {
     font-size: 1rem;
     padding: 10px 24px;
     border-radius: 30px;
@@ -135,20 +150,20 @@ body {
     border: none;
     font-weight: bold;
     transition: 0.3s ease;
-}
-
-#form .btn:hover {
+  }
+  
+  #form .btn:hover {
     background-color: #d35400;
     transform: scale(1.05);
-}
-
-/* Game Rules Steps */
-.game-rules {
+  }
+  
+  /* Game Rules */
+  .game-rules {
     max-width: 800px;
-    margin: auto;
-}
-
-.rule-step {
+    margin: 2rem auto;
+  }
+  
+  .rule-step {
     display: flex;
     align-items: center;
     background-color: #fff;
@@ -156,13 +171,13 @@ body {
     border-radius: 12px;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
     transition: 0.3s ease;
-}
-
-.rule-step:hover {
+  }
+  
+  .rule-step:hover {
     transform: scale(1.01);
-}
-
-.uno-icon {
+  }
+  
+  .uno-icon {
     width: 48px;
     height: 64px;
     border-radius: 8px;
@@ -173,26 +188,27 @@ body {
     line-height: 64px;
     margin-right: 1rem;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-}
-
-/* UNO-Themed Colors */
-.red {
+  }
+  
+  /* UNO-Themed Colors */
+  .red {
     background: #e74c3c;
-}
-
-.blue {
+  }
+  
+  .blue {
     background: #3498db;
-}
-
-.green {
+  }
+  
+  .green {
     background: #2ecc71;
-}
-
-.yellow {
+  }
+  
+  .yellow {
     background: #f1c40f;
     color: #000;
-}
-
-.black {
+  }
+  
+  .black {
     background: #2c3e50;
-}
+  }
+  
