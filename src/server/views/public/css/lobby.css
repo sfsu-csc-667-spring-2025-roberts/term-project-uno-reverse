@@ -3,18 +3,22 @@ body {
     font-family: 'Poppins', sans-serif;
     color: #222;
     min-height: 100vh;
+    margin: 0;
+    padding-bottom: 2rem;
   }
   
   .navbar {
     background-color: #000;
     color: #fff;
     padding: 1rem;
+    border-radius: 10px;
   }
   
   .navbar .navbar-brand {
     font-size: 1.5rem;
     color: #fff;
     font-weight: bold;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
   }
   
   .avatar-badge {
@@ -27,7 +31,7 @@ body {
   
   .nav-tabs .nav-link {
     font-weight: 600;
-    color: #000;
+    color: #333;
     border: none;
     transition: 0.3s;
   }
@@ -67,6 +71,7 @@ body {
   
   .btn-primary:hover {
     background-color: #219150;
+    transform: scale(1.05);
   }
   
   .game-setting-heading {
@@ -98,12 +103,59 @@ body {
     background-color: #d35400;
   }
   
-  .accordion-button {
-    font-weight: bold;
-    background-color: #f1c40f;
+  /* Game Rules Steps */
+  
+  .game-rules {
+    max-width: 800px;
+    margin: auto;
   }
   
-  .accordion-button.collapsed {
-    background-color: #f39c12;
+  .rule-step {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    transition: 0.3s ease;
+  }
+  
+  .rule-step:hover {
+    transform: scale(1.01);
+  }
+  
+  .uno-icon {
+    width: 48px;
+    height: 64px;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    line-height: 64px;
+    margin-right: 1rem;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* UNO-themed card colors */
+  .red {
+    background: #e74c3c;
+  }
+  
+  .blue {
+    background: #3498db;
+  }
+  
+  .green {
+    background: #2ecc71;
+  }
+  
+  .yellow {
+    background: #f1c40f;
+    color: #000;
+  }
+  
+  .black {
+    background: #2c3e50;
   }
   
