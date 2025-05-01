@@ -4,7 +4,7 @@
   "description": "Uno Multiplayer game",
   "scripts": {
     "start": "ts-node src/server/app.ts",
-    "start:dev": "nodemon --exec ts-node src/server/app.ts",
+    "start:dev": "ts-node src/server/app.ts",
     "prepare": "husky"
   },
   "keywords": [],
@@ -23,7 +23,7 @@
     "nodemon": "^3.1.10",
     "prettier": "^3.5.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
