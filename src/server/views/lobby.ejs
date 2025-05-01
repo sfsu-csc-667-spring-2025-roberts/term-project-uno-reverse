@@ -51,9 +51,9 @@
       </li>
     </ul>
 
-    <!-- Content -->
+    <!-- Tab Content -->
     <div class="tab-content pt-4" id="tab-content">
-      <!-- Matches Tab -->
+      <!-- Uno Matches -->
       <div class="tab-pane active" id="fill-tabpanel-0" role="tabpanel" aria-labelledby="fill-tab-0">
         <div class="table-responsive">
           <table class="table table-hover table-borderless">
@@ -93,33 +93,24 @@
         </div>
       </div>
 
-      <!-- Create Game Tab -->
+      <!-- Create Game -->
       <div class="tab-pane" id="fill-tabpanel-1" role="tabpanel" aria-labelledby="fill-tab-1">
-        <h3 class="game-setting-heading text-center">Game Settings</h3>
+        <h3 class="game-setting-heading">Game Settings</h3>
         <div class="container">
           <form id="form">
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" name="gamename" id="gamename" placeholder="Game Name" />
-              <label for="gamename">Game Name</label>
-            </div>
+            <input type="text" class="form-control" name="gamename" placeholder="Game Name" required />
 
-            <div class="form-floating mb-3">
-              <input type="password" class="form-control" name="gamepassword" id="gamepassword"
-                     placeholder="Game Password" />
-              <label for="gamepassword">Game Password</label>
-            </div>
+            <input type="password" class="form-control" name="gamepassword" placeholder="Game Password" />
+
+            <select class="form-select" name="players" required>
+              <option selected disabled>Max number of players</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
 
             <div class="mb-3">
-              <select class="form-select" name="players">
-                <option selected>Max number of players</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
-
-            <div class="btns mb-3">
-              <span>Private?</span>
+              <label class="form-label me-2">Private?</label>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="private" id="yesradio" value="yes" />
                 <label class="form-check-label" for="yesradio">Yes</label>
@@ -131,13 +122,13 @@
             </div>
 
             <div class="text-end">
-              <button type="submit" class="btn btn-primary">Create Match</button>
+              <button type="submit" class="btn">Create Match</button>
             </div>
           </form>
         </div>
       </div>
 
-      <!-- Game Rules Tab -->
+      <!-- Game Rules -->
       <div class="tab-pane" id="fill-tabpanel-2" role="tabpanel" aria-labelledby="fill-tab-2">
         <div class="game-rules px-3 pt-3">
           <% const rules = [
@@ -163,7 +154,7 @@
     </div>
   </div>
 
-  <!-- Bootstrap JavaScript -->
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

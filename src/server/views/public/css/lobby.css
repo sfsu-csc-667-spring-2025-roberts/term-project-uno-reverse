@@ -1,3 +1,4 @@
+/* Base Styling */
 body {
     background: linear-gradient(135deg, #ff4e50, #f9d423);
     font-family: 'Poppins', sans-serif;
@@ -7,6 +8,7 @@ body {
     padding-bottom: 2rem;
   }
   
+  /* Navbar */
   .navbar {
     background-color: #000;
     color: #fff;
@@ -29,6 +31,7 @@ body {
     font-weight: bold;
   }
   
+  /* Tabs */
   .nav-tabs .nav-link {
     font-weight: 600;
     color: #333;
@@ -42,6 +45,7 @@ body {
     border-radius: 20px;
   }
   
+  /* Table */
   .table thead th {
     color: #2c3e50;
     font-size: 1.1rem;
@@ -60,6 +64,7 @@ body {
     margin-right: 8px;
   }
   
+  /* Join Button */
   .btn-primary {
     background-color: #27ae60;
     border: none;
@@ -74,37 +79,57 @@ body {
     transform: scale(1.05);
   }
   
+  /* Game Settings Heading */
   .game-setting-heading {
+    text-align: center;
     color: #fff;
+    font-size: 1.8rem;
     font-weight: bold;
-    margin-bottom: 2rem;
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Create Game Form */
+  #form {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 16px;
+    max-width: 600px;
+    margin: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   }
   
   #form input,
-  #form select,
-  #form .form-check-input {
-    border-radius: 10px;
+  #form select {
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
   }
   
-  #form button {
-    margin-top: 1rem;
-    border-radius: 25px;
+  #form .form-check {
+    margin-right: 1rem;
+  }
+  
+  #form label {
+    font-weight: 500;
+  }
+  
+  #form .btn {
+    font-size: 1rem;
+    padding: 10px 24px;
+    border-radius: 30px;
     background-color: #e67e22;
     border: none;
     font-weight: bold;
-    padding: 10px 20px;
-    transition: background 0.3s ease;
+    transition: 0.3s ease;
   }
   
-  #form button:hover {
+  #form .btn:hover {
     background-color: #d35400;
+    transform: scale(1.05);
   }
   
   /* Game Rules Steps */
-  
   .game-rules {
     max-width: 800px;
     margin: auto;
@@ -137,7 +162,7 @@ body {
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
   }
   
-  /* UNO-themed card colors */
+  /* UNO-Themed Colors */
   .red {
     background: #e74c3c;
   }
