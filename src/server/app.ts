@@ -5,6 +5,7 @@ import loginRoutes from './routes/login';
 import registerRoutes from './routes/register';
 import forgotRoutes from './routes/forgot';
 import lobbyRoutes from './routes/lobby';
+import gameRoomRoutes from './routes/gameroom';
 
 import path from "path";
 import httpErrors from "http-errors";
@@ -34,6 +35,7 @@ app.use('/', registerRoutes);       // route for registration page
 app.use('/', forgotRoutes);         // route for forgot page
 app.use('/', lobbyRoutes);          // route for game lobby
 app.use("/api/auth", authRoutes);  
+app.use('/', gameRoomRoutes);          // route for game room
 
 dotenv.config();        
 
