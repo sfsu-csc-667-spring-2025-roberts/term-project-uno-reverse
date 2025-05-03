@@ -18,3 +18,104 @@ body {
     margin: 0;
     padding: 0;
 }
+
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.container>.inner-div1 {
+    display: flex;
+    flex-direction: column;
+    gap: 150px;
+}
+
+.container>.inner-div2 {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    align-items: center;
+    gap: 1000px;
+}
+
+.container>.inner-div1>div,
+.inner-div2>div {
+    width: 200px;
+    height: 200px;
+}
+
+#player1,
+#player2,
+#discard-pile {
+    width: 800px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 10px;
+    box-sizing: content-box;
+}
+
+#player3,
+#player4 {
+    height: 700px;
+    width: 300px;
+}
+
+#discard-pile {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#player1>div,
+#player2>div {
+    width: 120px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#player1,
+#player2,
+#player3,
+#player4 {
+    box-sizing: content-box;
+}
+
+#player3>div,
+#player4>div {
+    height: 300px;
+    height: 110px;
+}
+
+.uno-card {
+    width: 120px;
+    height: 200px;
+    position: absolute;
+}
+
+.player-uno-card {
+    width: 120px;
+    height: 200px;
+    transform: rotate(270deg) translateX(50px) translateY(80px);
+}
+
+.player4-uno-card {
+    width: 120px;
+    height: 200px;
+    transform: rotate(-270deg) translateX(-50px) translateY(-90px);
+}
+
+#discard-pile>.pile-card-div {
+    box-sizing: content-box;
+}
+
+#discard-pile>.pile-card-div>.pile-uno-card {
+    width: 120px;
+    height: 200px;
+    position: relative;
+}
