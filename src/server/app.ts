@@ -6,16 +6,18 @@ import registerRoutes from './routes/register';
 import forgotRoutes from './routes/forgot';
 import lobbyRoutes from './routes/lobby';
 import gameRoomRoutes from './routes/gameroom';
-
 import path from "path";
 import httpErrors from "http-errors";
 import { timeMiddleware } from "./middleware/time";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import pool from "./config/db";
+import session from 'express-session';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
 
 // logging library [ morgan ]
 app.use(morgan("dev"));
@@ -23,6 +25,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname + "/views/public")));
+
+app.use(
+    session({
+    secret: process.env.SESSION_SECRET!,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 // using ejs templating engine
 app.set("views", path.join(process.cwd(), "src", "server", "views"));
@@ -37,7 +47,14 @@ app.use('/', lobbyRoutes);          // route for game lobby
 app.use("/api/auth", authRoutes);  
 app.use('/', gameRoomRoutes);          // route for game room
 
-dotenv.config();        
+dotenv.config();      
+
+app.get('/', async (req, res) => {
+  const result = await pool.query('SELECT NOW()');
+  res.send(`PostgreSQL time is: ${result.rows[0].now}`);
+});
+
+
 
 app.listen(PORT, () => { 
     console.log(`Server is running on http://localhost:${PORT}`);

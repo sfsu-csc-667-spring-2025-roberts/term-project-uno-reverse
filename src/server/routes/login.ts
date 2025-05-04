@@ -32,7 +32,7 @@ router.post('/login', async (req: Request, res: Response) => {
 
     if (isPasswordValid) {
       console.log('User logged in successfully:', { email });
-      res.redirect('/');
+      res.redirect('/gameroom');
     } else {
       console.log('Invalid password for user:', { email });
       res.status(401).send('Invalid password');
