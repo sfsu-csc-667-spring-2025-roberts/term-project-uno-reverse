@@ -1,0 +1,55 @@
+<!-- profile.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Uno Game Room</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/gameroom.css" />
+    <link rel="stylesheet" href="/css/profile.css" />
+  </head>
+  <body>
+    <!-- Profile Icon and Dropdown -->
+    <div class="profile-wrapper">
+      <div class="profile-icon" id="profileIcon">👤</div>
+      <div class="profile-menu" id="profileMenu">
+        <a href="/settings" class="menu-item">Settings</a>
+        <a href="/logout" class="menu-item logout">Logout</a>
+      </div>
+    </div>
+
+    <!-- Your game room content here -->
+    <div class="container">
+      <!-- Game content goes here -->
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- TypeScript compiled JS or inline if needed -->
+    <script type="module">
+      const profileIcon = document.getElementById("profileIcon") as HTMLElement;
+      const profileMenu = document.getElementById("profileMenu") as HTMLElement;
+
+      profileIcon.addEventListener("click", () => {
+        profileMenu.style.display =
+          profileMenu.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", (event: MouseEvent) => {
+        const target = event.target as HTMLElement;
+        if (!profileIcon.contains(target) && !profileMenu.contains(target)) {
+          profileMenu.style.display = "none";
+        }
+      });
+    </script>
+  </body>
+</html>
