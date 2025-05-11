@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname + "/views/public")));
 
 app.use(
     session({
-    secret: process.env.SESSION_SECRET!,
+    secret: 'uno-reverse-hardcoded-secret',
     resave: false,
     saveUninitialized: false,
   })
