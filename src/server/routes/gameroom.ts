@@ -1,10 +1,11 @@
+import { authenticate } from "./authentication";
 import { Router } from "express";
-const router = Router()
+const router = Router();
 
 // route for gameroom.html
-router.get("/gameroom", (req, res) => {
-    const page_name = 'Game Room';
-    res.render('gameroom', { page_name });
+router.get("/gameroom", authenticate, (req, res) => {
+  const page_name = "Game Room";
+  res.render("gameroom", { page_name });
 });
 
-export default router
+export default router;
