@@ -1,123 +1,87 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  html {
-    height: 100%;
-    background: linear-gradient(to right, #E4002B, #FFD700, #008000, #1E90FF);
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  body {
-    background-image: url('../images/back-image.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    position: relative;
-  }
-  
-  .inner-div1 {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    padding: 40px 0;
-  }
-  
-  .inner-div2 {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    padding: 0 50px;
-  }
-  
-  /* Player sections */
-  #player1, #player2, #discard-pile {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    padding: 10px;
-  }
-  
-  #player3, #player4 {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  /* Card holders */
-  #player1 > div,
-  #player2 > div,
-  #player3 > div,
-  #player4 > div {
-    width: 120px;
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-  
-  .card-div {
-    width: 120px;
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* Card image styles */
-  .uno-card,
-  .pile-uno-card {
-    width: 120px;
-    height: 200px;
-    object-fit: contain;
-  }
-  
-  .player-uno-card {
-    width: 120px;
-    height: 200px;
-    transform: rotate(270deg) translateX(50px) translateY(80px);
-    object-fit: contain;
-  }
-  
-  .player4-uno-card {
-    width: 120px;
-    height: 200px;
-    transform: rotate(-270deg) translateX(-50px) translateY(-90px);
-    object-fit: contain;
-  }
-  
-  /* Discard pile stack */
-  #discard-pile .pile-card-div {
-    position: relative;
-  }
-  
-  /* Optional: profile icon placement */
-  .profile-icon {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 10;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-image: url('../images/back-image.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* Layout container */
+.game-container {
+  width: 100vw;
+  height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Player card rows */
+.top-row,
+.bottom-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.middle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+}
+
+/* Center pile */
+.center-pile {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* UNO Cards */
+.uno-card {
+  width: 100px;
+  height: 160px;
+  object-fit: contain;
+}
+
+.side-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.side-rotate {
+  transform: rotate(270deg);
+}
+
+.reverse {
+  transform: rotate(90deg);
+}
+
+/* Buttons */
+.game-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+/* Settings Modal Booklet Frame */
+.booklet-frame {
+  border: 6px solid #6e4b28;
+  background: #fffdf8;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
