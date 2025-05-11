@@ -31,13 +31,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname + "/views/public")));
 
 app.use(
-<<<<<<< HEAD
-    session({
-    secret: 'uno-reverse-hardcoded-secret',
-=======
   session({
     secret: process.env.SESSION_SECRET!,
->>>>>>> 4868572 (Add login, registration, and authentication implementations)
     resave: false,
     saveUninitialized: false,
   })
