@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname + "/views/public")));
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET!,
+    secret: process.env.SESSION_SECRET || "fallback-secret-key",
     resave: false,
     saveUninitialized: false,
   })
