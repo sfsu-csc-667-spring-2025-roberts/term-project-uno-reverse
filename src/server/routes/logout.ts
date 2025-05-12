@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import passport from "passport";
+import { forwardAuthenticated } from "./authentication";
 
 const router = Router();
 

@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname + "/views/public")));
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "fallback-secret-key",
+    secret: process.env.SESSION_SECRET!,
     resave: false,
     saveUninitialized: false,
   })
@@ -72,10 +72,11 @@ app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-// middlewares
+// middlewares;
 app.use((_request, _response, next) => {
   next(httpErrors(404));
 });
+
 app.use(timeMiddleware);
 
 export default app;

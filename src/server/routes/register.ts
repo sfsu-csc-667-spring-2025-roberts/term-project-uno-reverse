@@ -33,7 +33,7 @@ router.post("/register", async (req: Request, res: Response) => {
   } else {
     try {
       const result = await pool.query(
-        "SELECT * FROM users WHERE email = $1 AND name = $2",
+        "SELECT * FROM public.users WHERE email = $1 AND name = $2",
         [email, name]
       );
 
@@ -47,7 +47,6 @@ router.post("/register", async (req: Request, res: Response) => {
         res.redirect("/register");
       }
 
-      
       const hashedPassword = bcrypt.hashSync(password, 10);
       await pool.query(
         "INSERT INTO public.users (name, email, password) VALUES ($1, $2, $3)",

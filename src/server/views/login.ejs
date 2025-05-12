@@ -36,13 +36,19 @@
                     </div>
 
                     <% if (messages.error) { %>
-                        <p>
+                        <p class="text-danger">
                             <%= messages.error %>
                         </p>
                         <%} %>
 
-                            <a href="/forgot" id="forgot-password" class="mb-3">Forgot your password?</a>
-                            <button id="signin">SIGN IN</button>
+                            <% if(password_change) {%>
+                                <p class="text-success">
+                                    <%= password_change %>
+                                </p>
+                                <%}%>
+
+                                    <a href="/forgot" id="forgot-password" class="mb-3">Forgot your password?</a>
+                                    <button id="signin">SIGN IN</button>
                 </div>
             </form>
 

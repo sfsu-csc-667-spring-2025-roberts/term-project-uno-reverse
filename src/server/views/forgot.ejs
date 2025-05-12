@@ -19,7 +19,7 @@
 <body>
     <div class="container-fluid d-flex align-items-center justify-content-center" style="min-height: 100vh;">
         <div id="forms">
-            <form id="forgot-form">
+            <form id="forgot-form" , method="POST" , action="/forgot">
                 <div id="forgot-form-container">
                     <h1 id="forgot-heading" class="mb-3">Forgot Password</h1>
                     <p id="forgot-password-statement">
@@ -37,14 +37,26 @@
                             required />
                     </div>
 
-                    <!-- Reset Button -->
-                    <button id="reset-password" type="submit">Reset My Password</button>
+                    <% if(error_password_change) {%>
+                        <p class="text-danger text-center">
+                            <%= error_password_change %>
+                        </p>
+                        <%}%>
 
-                    <!-- New: Register & Login Links -->
-                    <div class="mt-4 d-flex justify-content-center gap-3">
-                        <a href="/register" class="text-decoration-none">Register</a>
-                        <a href="/login" class="text-decoration-none">Login</a>
-                    </div>
+                            <%if(email_error_message){%>
+                                <p class="text-danger text-center">
+                                    <%= email_error_message %>
+                                </p>
+                                <%}%>
+
+                                    <!-- Reset Button -->
+                                    <button id="reset-password" type="submit">Reset My Password</button>
+
+                                    <!-- New: Register & Login Links -->
+                                    <div class="mt-4 d-flex justify-content-center gap-3">
+                                        <a href="/register" class="text-decoration-none">Register</a>
+                                        <a href="/login" class="text-decoration-none">Login</a>
+                                    </div>
                 </div>
             </form>
         </div>
