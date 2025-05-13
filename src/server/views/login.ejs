@@ -47,12 +47,19 @@
                                 </p>
                                 <%}%>
 
-                                    <a href="/forgot" id="forgot-password" class="mb-3">Forgot your password?</a>
-                                    <button id="signin">SIGN IN</button>
+                                    <%if(success_message) {%>
+                                        <p class="text-success text-center">
+                                            <%= success_message %>
+                                        </p>
+                                        <%}%>
+
+                                            <a href="/forgot" id="forgot-password" class="mb-3">Forgot your
+                                                password?</a>
+                                            <button id="signin">SIGN IN</button>
+
+                                            <a href="/" id="home" class="mb-3">Home</a>
                 </div>
             </form>
-
-            <a href="/" id="home" class="mb-3">Home</a>
 
             <div id="registration-form">
                 <h1>Hello, Friend!</h1>

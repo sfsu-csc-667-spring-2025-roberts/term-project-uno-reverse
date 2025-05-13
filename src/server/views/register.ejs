@@ -55,9 +55,15 @@
                         <%= passwordMisMatchError %>
                     </p>
 
-                    <button id="signup" type="submit">SIGN UP</button>
+                    <% if(error_message) {%>
+                        <p class="text-danger">
+                            <%= error_message %>
+                        </p>
+                        <%}%>
 
-                    <a href="/" id="home" class="mb-3">Home</a>
+                            <button id="signup" type="submit">SIGN UP</button>
+
+                            <a href="/" id="home" class="mb-3">Home</a>
                 </div>
             </form>
         </div>

@@ -26,10 +26,8 @@ router.post("/register", async (req: Request, res: Response) => {
 
   // passwords do not match
   if (password !== confirmPassword) {
-    // res.status(400).send("Passwords do not match.");
-    res.render("register", {
-      passwordMisMatchError: "Passwords do not match.",
-    });
+    req.flash("error_message", `Passwords do not match.`);
+    res.redirect("/register");
   } else {
     try {
       const result = await pool.query(
@@ -38,32 +36,33 @@ router.post("/register", async (req: Request, res: Response) => {
       );
 
       if (result.rows.length > 0) {
+        // user exists
         console.error("User already exists with the same email or username");
         req.flash(
           "error_message",
-          '"User already exists with the same email or username"'
+          `An account with the email address ${email} already exists. Please choose a different one.`
         );
-        // res.status(400).send("User with that email or username already exists");
         res.redirect("/register");
+      } else {
+        // register a new user
+        const hashedPassword = bcrypt.hashSync(password, 10);
+        await pool.query(
+          "INSERT INTO public.users (name, email, password) VALUES ($1, $2, $3)",
+          [name, email, hashedPassword]
+        );
+
+        console.log("User registered successfully:", {
+          name,
+          email,
+          hashedPassword,
+        });
+
+        req.flash(
+          "success_message",
+          "You have been registered successfully. Please log in."
+        );
+        res.redirect("/login");
       }
-
-      const hashedPassword = bcrypt.hashSync(password, 10);
-      await pool.query(
-        "INSERT INTO public.users (name, email, password) VALUES ($1, $2, $3)",
-        [name, email, hashedPassword]
-      );
-
-      console.log("User registered successfully:", {
-        name,
-        email,
-        hashedPassword,
-      });
-
-      req.flash(
-        "success_message",
-        "You have been registered successfully. Please log in."
-      );
-      res.redirect("/login");
     } catch (error) {
       console.error("Error registering user:", error);
       res.status(500).send("Error registering user");
