@@ -1,4 +1,7 @@
 import express from "express";
+import dotenv from "dotenv"; // moved up
+dotenv.config(); // ✅ called immediately after import
+
 import authRoutes from "./routes/authRoutes";
 import indexRoutes from "./routes/landing";
 import loginRoutes from "./routes/login";
@@ -12,7 +15,6 @@ import path from "path";
 import httpErrors from "http-errors";
 import { timeMiddleware } from "./middleware/time";
 import morgan from "morgan";
-import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import pool from "./config/db";
 import session from "express-session";
@@ -24,7 +26,7 @@ const app = express();
 initialize(passport);
 const PORT = process.env.PORT || 3000;
 
-// logging library [ morgan ]
+// logging
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -32,7 +34,7 @@ app.use(express.static(path.join(__dirname + "/views/public")));
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET!,
+    secret: process.env.SESSION_SECRET || "default-secret", // ✅ add fallback if missing
     resave: false,
     saveUninitialized: false,
   })
@@ -47,22 +49,21 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// using ejs templating engine
+// EJS template
 app.set("views", path.join(process.cwd(), "src", "server", "views"));
 app.set("view engine", "ejs");
 
-// Routes [ *** add your routes here *** ]
-app.use("/", indexRoutes); // route for landing page
-app.use("/", loginRoutes); // route for login page
-app.use("/", logoutRoutes); // route for logout
-app.use("/", registerRoutes); // route for registration page
-app.use("/", forgotRoutes); // route for forgot page
-app.use("/", lobbyRoutes); // route for game lobby
+// Routes
+app.use("/", indexRoutes);
+app.use("/", loginRoutes);
+app.use("/", logoutRoutes);
+app.use("/", registerRoutes);
+app.use("/", forgotRoutes);
+app.use("/", lobbyRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/", gameRoomRoutes); // route for game room
+app.use("/", gameRoomRoutes);
 
-dotenv.config();
-
+// Test route
 app.get("/", async (req, res) => {
   const result = await pool.query("SELECT NOW()");
   res.send(`PostgreSQL time is: ${result.rows[0].now}`);
@@ -72,11 +73,10 @@ app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-// middlewares;
+// Middlewares
 app.use((_request, _response, next) => {
   next(httpErrors(404));
 });
-
 app.use(timeMiddleware);
 
 export default app;
