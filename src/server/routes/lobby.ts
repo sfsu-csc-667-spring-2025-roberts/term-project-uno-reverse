@@ -1,4 +1,4 @@
-import { authenticate, forwardAuthenticated } from "./authentication";
+import { authenticate } from "./authentication";
 import { Router } from "express";
 const router = Router();
 

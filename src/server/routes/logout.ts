@@ -11,7 +11,7 @@ router.get("/logout", (req: Request, res: Response) => {
       return res.status(500).send("Error logging out");
     }
 
-    res.redirect("/login");
+    res.redirect("/");
   });
 });
 

@@ -4,7 +4,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   font-family: 'Poppins', sans-serif;
 }
@@ -19,47 +20,63 @@ body {
 
 /* Layout container */
 .game-container {
-  width: 100vw;
-  height: 100vh;
-  padding: 20px;
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  /* justify-content: space-between; */
+  height: 100vh;
+  width: 100vw;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 /* Player card rows */
 .top-row,
 .bottom-row {
+  width: 760px;
+  padding: 10px;
+  margin: auto;
+  box-sizing: content-box;
   display: flex;
   justify-content: center;
-  gap: 10px;
+  /* gap: 2px; */
 }
 
 .middle-row {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   align-items: center;
-  padding: 0 5%;
+  width: 65%;
+}
+
+.middle-row>.side-stack>.uno-card {
+  margin: -30px;
 }
 
 /* Center pile */
 .center-pile {
+  flex: 1;
   display: flex;
   justify-content: center;
-  gap: 20px;
+  align-items: center;
+  box-sizing: content-box;
 }
 
 /* UNO Cards */
 .uno-card {
   width: 100px;
-  height: 160px;
   object-fit: contain;
+  border-radius: 10px;
+  margin: -10px;
 }
 
 .side-stack {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 15%;
 }
 
 .side-rotate {
@@ -75,7 +92,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-bottom: 20px;
+  margin: 10px 0px 20px 0px;
 }
 
 /* Settings Modal Booklet Frame */

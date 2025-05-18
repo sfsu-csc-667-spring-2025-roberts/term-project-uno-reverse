@@ -10,6 +10,7 @@ import forgotRoutes from "./routes/forgot";
 import lobbyRoutes from "./routes/lobby";
 import gameRoomRoutes from "./routes/gameroom";
 import logoutRoutes from "./routes/logout";
+import profileRoutes from "./routes/profile";
 
 import path from "path";
 import httpErrors from "http-errors";
@@ -49,8 +50,8 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// EJS template
 app.set("views", path.join(process.cwd(), "src", "server", "views"));
+// EJS template
 app.set("view engine", "ejs");
 
 // Routes
@@ -62,6 +63,7 @@ app.use("/", forgotRoutes);
 app.use("/", lobbyRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/", gameRoomRoutes);
+app.use("/", profileRoutes);
 
 // Test route
 app.get("/", async (req, res) => {
@@ -77,6 +79,7 @@ app.listen(PORT, () => {
 app.use((_request, _response, next) => {
   next(httpErrors(404));
 });
+
 app.use(timeMiddleware);
 
 export default app;
