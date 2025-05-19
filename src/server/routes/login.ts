@@ -23,7 +23,7 @@ router.get("/login", forwardAuthenticated, (req: Request, res: Response) => {
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/gameroom",
+    successRedirect: "/lobby",
     failureRedirect: "/login",
     failureFlash: true,
   })

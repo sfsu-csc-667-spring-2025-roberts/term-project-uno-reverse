@@ -29,7 +29,7 @@
   </div>
 
   <!-- Settings Modal -->
-  <div id="settingsModal" class="settings-modal">
+  <!-- <div id="settingsModal" class="settings-modal">
     <div class="settings-content booklet-frame">
       <div class="settings-left">
         <img src="/images/profile-placeholder.png" alt="Profile" class="profile-pic" />
@@ -47,7 +47,34 @@
         <button class="btn btn-outline-dark mt-3" onclick="closeSettings()">Close</button>
       </div>
     </div>
+  </div> -->
+
+  <!-- Player Count Selection Modal -->
+  <div class="modal fade" id="playerCountModal" tabindex="-1" aria-labelledby="playerCountModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="playerCountModalLabel">Select Number of Players</h5>
+        </div>
+        <div class="modal-body">
+          <form id="playerCountForm">
+            <div class="mb-3">
+              <label for="numPlayers" class="form-label">Number of players</label>
+              <select class="form-select" id="numPlayers" required>
+                <option value="" disabled selected>Select</option>
+                <option value="2">2 Players</option>
+                <option value="3">3 Players</option>
+                <option value="4">4 Players</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Start Game</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
+
 
   <!-- Game Layout -->
   <div class="game-container">
