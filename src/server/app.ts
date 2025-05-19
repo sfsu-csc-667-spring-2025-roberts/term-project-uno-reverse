@@ -9,6 +9,7 @@ import registerRoutes from "./routes/register";
 import forgotRoutes from "./routes/forgot";
 import lobbyRoutes from "./routes/lobby";
 import gameRoomRoutes from "./routes/gameroom";
+import gameRoutes from "./routes/gameRoutes";
 import logoutRoutes from "./routes/logout";
 import profileRoutes from "./routes/profile";
 
@@ -63,6 +64,7 @@ app.use("/", forgotRoutes);
 app.use("/", lobbyRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/", gameRoomRoutes);
+app.use("/game", gameRoutes);
 app.use("/", profileRoutes);
 
 // Test route
