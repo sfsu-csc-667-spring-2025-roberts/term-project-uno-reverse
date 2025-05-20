@@ -1,52 +1,64 @@
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html {
-    height: 100%;
-    background: linear-gradient(to right, #E4002B, #FFD700, #008000, #1E90FF);
+html,
+body {
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background-image: url('../images/back-image.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    width: 100vw;
-    margin: 0;
-    padding: 0;
+  background-image: url('../images/back-image.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
 }
 
-.container {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
+/* Layout container */
+.game-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: space-between; */
+  height: 100vh;
+  width: 100vw;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
-.container>.inner-div1 {
-    display: flex;
-    flex-direction: column;
-    gap: 150px;
+/* Player card rows */
+.top-row,
+.bottom-row {
+  width: 760px;
+  padding: 10px;
+  margin: auto;
+  box-sizing: content-box;
+  display: flex;
+  justify-content: center;
+  /* gap: 2px; */
 }
 
-.container>.inner-div2 {
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    align-items: center;
-    gap: 1000px;
+.middle-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 65%;
 }
 
-.container>.inner-div1>div,
-.inner-div2>div {
-    width: 200px;
-    height: 200px;
+.middle-row>.side-stack>.uno-card {
+  margin: -30px;
 }
 
-
+/* Center pile */
+.center-pile {
+  flex: 1;
+  
+}
 .uno-btn {
     font-size: 2rem;
     font-weight: bold;
@@ -110,30 +122,42 @@ body {
     height: 110px;
 }
 
+/* UNO Cards */
 .uno-card {
-    width: 120px;
-    height: 200px;
-    position: absolute;
+  width: 100px;
+  object-fit: contain;
+  border-radius: 10px;
+  margin: -10px;
 }
 
-.player-uno-card {
-    width: 120px;
-    height: 200px;
-    transform: rotate(270deg) translateX(50px) translateY(80px);
+.side-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 15%;
 }
 
-.player4-uno-card {
-    width: 120px;
-    height: 200px;
-    transform: rotate(-270deg) translateX(-50px) translateY(-90px);
+.side-rotate {
+  transform: rotate(270deg);
 }
 
-#discard-pile>.pile-card-div {
-    box-sizing: content-box;
+.reverse {
+  transform: rotate(90deg);
 }
 
-#discard-pile>.pile-card-div>.pile-uno-card {
-    width: 120px;
-    height: 200px;
-    position: relative;
+/* Buttons */
+.game-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 10px 0px 20px 0px;
+}
+
+/* Settings Modal Booklet Frame */
+.booklet-frame {
+  border: 6px solid #6e4b28;
+  background: #fffdf8;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
 }

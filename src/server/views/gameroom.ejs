@@ -2,183 +2,186 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Uno Game Room</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Uno Reverse</title>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/gameroom.css" />
+    <link rel="stylesheet" href="/css/profile.css" />
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      background: radial-gradient(circle, #ff0000 0%, #000000 100%);
-      color: white;
-      overflow: hidden;
-      height: 100vh;
-      position: relative;
-    }
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
-    .uno-card {
-      width: 70px;
-      height: auto;
-      margin: 5px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .player {
-      position: absolute;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .player-row {
-      width: 100%;
-      flex-direction: row;
-    }
-
-    .player-col {
-      height: 100%;
-      flex-direction: column;
-    }
-
-    .player-top {
-      top: 10px;
-      left: 0;
-      transform: rotate(180deg);
-    }
-
-    .player-bottom {
-      bottom: 10px;
-      left: 0;
-    }
-
-    .player-left {
-      top: 0;
-      left: 10px;
-      flex-direction: column;
-    }
-
-    .player-right {
-      top: 0;
-      right: 10px;
-      flex-direction: column;
-    }
-
-    .left-card, .right-card {
-      width: 70px;
-      height: auto;
-      margin: 5px;
-      transform-origin: center center;
-    }
-
-    .left-card {
-      transform: rotate(90deg);
-    }
-
-    .right-card {
-      transform: rotate(-90deg);
-    }
-
-    #discard-pile {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .pile-uno-card {
-      width: 60px;
-    }
-
-    #uno-form {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, 120%);
-    }
-
-    .uno-btn {
-      font-weight: bold;
-      font-size: 1.2rem;
-      padding: 10px 20px;
-      background-color: yellow;
-      color: black;
-      border: none;
-      border-radius: 8px;
-    }
-
-    .uno-btn:hover {
-      background-color: gold;
-    }
-  </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/gameroom.css" />
 </head>
 <body>
+    <audio autoplay loop>
+        <source src="music/ziggy.mp3" type="audio/mpeg">
+    </audio>
+    <div class="container">
+        <div class="inner-div1">
+            <div id="player1">
+                <div id="player1-card1" class="card-div">
+                    <img src="images/Blue_2.jpg" alt="Uno Deck Card" class="uno-card" />
+                </div>
 
-  <audio autoplay loop>
-    <source src="music/ziggy.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+                <div id="player1-card2" class="card-div">
+                    <img src="images/Blue_2.jpg" alt="Uno Deck Card" class="uno-card" />
+                </div>
 
-  <!-- Player 1 (Bottom) -->
-  <div class="player player-bottom player-row">
-    <img src="images/Blue_2.jpg" class="uno-card" alt="Card">
-    <img src="images/Blue_2.jpg" class="uno-card" alt="Card">
-    <img src="images/Blue_2.jpg" class="uno-card" alt="Card">
-    <img src="images/Blue_2.jpg" class="uno-card" alt="Card">
-    <img src="images/Blue_2.jpg" class="uno-card" alt="Card">
-    <img src="images/Blue_2.jpg" class="uno-card" alt="Card">
-    <img src="images/Blue_2.jpg" class="uno-card" alt="Card">
-  </div>
+                <div id="player1-card3" class="card-div">
+                    <img src="images/Blue_2.jpg" alt="Uno Deck Card" class="uno-card" />
+                </div>
 
-  <!-- Player 2 (Top) -->
-  <div class="player player-top player-row">
-    <img src="images/Green_1.jpg" class="uno-card" alt="Card">
-    <img src="images/Green_1.jpg" class="uno-card" alt="Card">
-    <img src="images/Green_1.jpg" class="uno-card" alt="Card">
-    <img src="images/Green_1.jpg" class="uno-card" alt="Card">
-    <img src="images/Green_1.jpg" class="uno-card" alt="Card">
-    <img src="images/Green_1.jpg" class="uno-card" alt="Card">
-    <img src="images/Green_1.jpg" class="uno-card" alt="Card">
-  </div>
+                <div id="player1-card4" class="card-div">
+                    <img src="images/Blue_2.jpg" alt="Uno Deck Card" class="uno-card" />
+                </div>
 
-  <!-- Player 3 (Left) -->
-  <div class="player player-left player-col">
-    <img src="images/Yellow_1.jpg" class="left-card" alt="Card">
-    <img src="images/Yellow_1.jpg" class="left-card" alt="Card">
-    <img src="images/Yellow_1.jpg" class="left-card" alt="Card">
-    <img src="images/Yellow_1.jpg" class="left-card" alt="Card">
-    <img src="images/Yellow_1.jpg" class="left-card" alt="Card">
-    <img src="images/Yellow_1.jpg" class="left-card" alt="Card">
-    <img src="images/Yellow_1.jpg" class="left-card" alt="Card">
-  </div>
+                <div id="player1-card5" class="card-div">
+                    <img src="images/Blue_2.jpg" alt="Uno Deck Card" class="uno-card" />
+                </div>
 
-  <!-- Player 4 (Right) -->
-  <div class="player player-right player-col">
-    <img src="images/Red_1.jpg" class="right-card" alt="Card">
-    <img src="images/Red_1.jpg" class="right-card" alt="Card">
-    <img src="images/Red_1.jpg" class="right-card" alt="Card">
-    <img src="images/Red_1.jpg" class="right-card" alt="Card">
-    <img src="images/Red_1.jpg" class="right-card" alt="Card">
-    <img src="images/Red_1.jpg" class="right-card" alt="Card">
-    <img src="images/Red_1.jpg" class="right-card" alt="Card">
-  </div>
+                <div id="player1-card6" class="card-div">
+                    <img src="images/Blue_2.jpg" alt="Uno Deck Card" class="uno-card" />
+                </div>
 
-  <!-- Discard Pile -->
-  <div id="discard-pile">
-    <img src="images/Green_1.jpg" class="pile-uno-card" alt="Card">
-    <img src="images/Yellow_1.jpg" class="pile-uno-card" alt="Card">
-    <img src="images/Blue_2.jpg" class="pile-uno-card" alt="Card">
-  </div>
+                <div id="player1-card7" class="card-div">
+                    <img src="images/Blue_2.jpg" alt="Uno Deck Card" class="uno-card" />
+                </div>
 
-  <!-- UNO Button -->
-  <form id="uno-form" action="/declare-uno" method="POST">
-    <button type="submit" class="uno-btn">UNO!</button>
-  </form>
+            </div>
 
+            <!-- Beginning of discard pile -->
+
+            <div id="discard-pile">
+                <div id="pile-card1" class="pile-card-div">
+                    <img src="images/Blue_2.jpg" alt="Uno Deck Card" class="pile-uno-card" />
+                </div>
+
+                <div id="pile-card1" class="pile-card-div">
+                    <img src="images/Green_1.jpg" alt="Uno Deck Card" class="pile-uno-card" />
+                </div>
+
+                <div id="pile-card1" class="pile-card-div">
+                    <img src="images/Yellow_1.jpg" alt="Uno Deck Card" class="pile-uno-card" />
+                </div>
+
+                <div id="pile-card1" class="pile-card-div">
+                    <img src="images/Yellow_1.jpg" alt="Uno Deck Card" class="pile-uno-card" />
+                </div>
+
+                <div id="pile-card1" class="pile-card-div">
+                    <img src="images/Yellow_1.jpg" alt="Uno Deck Card" class="pile-uno-card" />
+                </div>
+
+                <div id="pile-card1" class="pile-card-div">
+                    <img src="images/Yellow_1.jpg" alt="Uno Deck Card" class="pile-uno-card" />
+                </div>
+            </div>
+
+            <!-- End of discard pile-->
+
+            <div id="player2">
+                <div id="player2-card1" class="card-div">
+                    <img src="images/Green_1.jpg" alt="Uno Deck Card" class="uno-card" />
+                </div>
+
+                <div id="player2-card2" class="card-div">
+                    <img src="images/Green_1.jpg" alt="Uno Deck Card" class="uno-card" />
+                </div>
+
+                <div id="player2-card3" class="card-div">
+                    <img src="images/Green_1.jpg" alt="Uno Deck Card" class="uno-card" />
+                </div>
+
+                <div id="player2-card4" class="card-div">
+                    <img src="images/Green_1.jpg" alt="Uno Deck Card" class="uno-card" />
+                </div>
+
+                <div id="player2-card5" class="card-div">
+                    <img src="images/Green_1.jpg" alt="Uno Deck Card" class="uno-card" />
+                </div>
+
+                <div id="player2-card6" class="card-div">
+                    <img src="images/Green_1.jpg" alt="Uno Deck Card" class="uno-card" />
+                </div>
+
+                <div id="player2-card7" class="card-div">
+                    <img src="images/Green_1.jpg" alt="Uno Deck Card" class="uno-card" />
+                </div>
+            </div>
+        </div>
+
+        <div class="inner-div2">
+            <div id="player3">
+                <div id="player3-card1" class="card-div">
+                    <img src="images/Yellow_1.jpg" alt="Uno Deck Card" class="player-uno-card" />
+                </div>
+
+                <div id="player3-card2" class="card-div">
+                    <img src="images/Yellow_1.jpg" alt="Uno Deck Card" class="player-uno-card" />
+                </div>
+
+                <div id="player3-card3" class="card-div">
+                    <img src="images/Yellow_1.jpg" alt="Uno Deck Card" class="player-uno-card" />
+                </div>
+
+                <div id="player3-card4" class="card-div">
+                    <img src="images/Yellow_1.jpg" alt="Uno Deck Card" class="player-uno-card" />
+                </div>
+
+                <div id="player3-card5" class="card-div">
+                    <img src="images/Yellow_1.jpg" alt="Uno Deck Card" class="player-uno-card" />
+                </div>
+
+                <div id="player3-card6" class="card-div">
+                    <img src="images/Yellow_1.jpg" alt="Uno Deck Card" class="player-uno-card" />
+                </div>
+
+                <div id="player3-card7" class="card-div">
+                    <img src="images/Yellow_1.jpg" alt="Uno Deck Card" class="player-uno-card" />
+                </div>
+            </div>
+
+            <div id="player4">
+                <div id="player4-card1" class="card-div">
+                    <img src="images/Red_1.jpg" alt="Uno Deck Card" class="player4-uno-card" />
+                </div>
+
+                <div id="player4-card2" class="card-div">
+                    <img src="images/Red_1.jpg" alt="Uno Deck Card" class="player4-uno-card" />
+                </div>
+
+                <div id="player4-card3" class="card-div">
+                    <img src="images/Red_1.jpg" alt="Uno Deck Card" class="player4-uno-card" />
+                </div>
+
+                <div id="player4-card4" class="card-div">
+                    <img src="images/Red_1.jpg" alt="Uno Deck Card" class="player4-uno-card" />
+                </div>
+
+                <div id="player4-card5" class="card-div">
+                    <img src="images/Red_1.jpg" alt="Uno Deck Card" class="player4-uno-card" />
+                </div>
+
+                <div id="player4-card6" class="card-div">
+                    <img src="images/Red_1.jpg" alt="Uno Deck Card" class="player4-uno-card" />
+                </div>
+
+                <div id="player4-card7" class="card-div">
+                    <img src="images/Red_1.jpg" alt="Uno Deck Card" class="player4-uno-card" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
 </body>
 </html>

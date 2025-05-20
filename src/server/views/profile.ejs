@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Uno Reverse - Profile Settings</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/gameroom.css" />
+    <link rel="stylesheet" href="/css/profile.css" />
+  </head>
+  <body>
+    <!-- Profile Icon and Dropdown -->
+    <div class="profile-wrapper">
+      <div class="profile-icon" id="profileIcon">RA</div>
+      <div class="profile-menu" id="profileMenu">
+        <a href="#" class="menu-item" onclick="openSettings()">Settings</a>
+        <a href="/logout" class="menu-item logout">Logout</a>
+      </div>
+    </div>
+
+    <!-- Settings Modal Booklet -->
+    <div id="settingsModal" class="settings-modal">
+      <div class="settings-content">
+        <div class="settings-left">
+          <img src="/images/profile-placeholder.png" alt="Profile" class="profile-pic" />
+          <p><strong>Username:</strong> Nuno</p>
+          <p><strong>ID:</strong> 43758722</p>
+          <p><strong>Score:</strong> 16 won</p>
+          <p><strong>Games Played:</strong> 54</p>
+          <div class="badges">
+            <span>🏅</span><span>🏅</span><span>🏅</span><span>🏅</span><span>🏅</span>
+          </div>
+        </div>
+        <div class="settings-right">
+          <h5>Bio</h5>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi a risus
+            at lacus commodo finibus.
+          </p>
+          <button class="btn btn-outline-dark mt-3" onclick="closeSettings()">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Container Placeholder -->
+    <div class="container">
+      <!-- Optional: Game or other content -->
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const profileIcon = document.getElementById("profileIcon");
+      const profileMenu = document.getElementById("profileMenu");
+
+      profileIcon.addEventListener("click", () => {
+        profileMenu.style.display =
+          profileMenu.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", (event) => {
+        const target = event.target;
+        if (
+          !profileIcon.contains(target) &&
+          !profileMenu.contains(target) &&
+          !document.getElementById("settingsModal").contains(target)
+        ) {
+          profileMenu.style.display = "none";
+        }
+      });
+
+      function openSettings() {
+        document.getElementById("settingsModal").style.display = "flex";
+        profileMenu.style.display = "none";
+      }
+
+      function closeSettings() {
+        document.getElementById("settingsModal").style.display = "none";
+      }
+    </script>
+  </body>
+</html>

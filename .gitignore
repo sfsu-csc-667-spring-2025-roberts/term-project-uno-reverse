@@ -1,3 +1,5 @@
-node_modules/uni
-.env/
+# Ignore environment variable file
+.env
+
+# Ignore Node.js dependencies
 node_modules/

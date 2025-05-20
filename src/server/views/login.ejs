@@ -16,6 +16,9 @@
 <body>
     <div class="container-fluid">
         <div id="forms">
+            <!-- <% if(success_message) {%>
+                <%= success_message %>
+                    <%}%> -->
             <form id="login-form" action="/login" method="POST">
                 <div id="form-container">
                     <h1 id="login-heading" class="mb-3">Sign In</h1>
@@ -32,12 +35,31 @@
                             required />
                     </div>
 
-                    <a href="/forgot" id="forgot-password" class="mb-3">Forgot your password?</a>
-                    <button id="signin">SIGN IN</button>
+                    <% if (messages.error) { %>
+                        <p class="text-danger">
+                            <%= messages.error %>
+                        </p>
+                        <%} %>
+
+                            <% if(password_change) {%>
+                                <p class="text-success">
+                                    <%= password_change %>
+                                </p>
+                                <%}%>
+
+                                    <%if(success_message) {%>
+                                        <p class="text-success text-center">
+                                            <%= success_message %>
+                                        </p>
+                                        <%}%>
+
+                                            <a href="/forgot" id="forgot-password" class="mb-3">Forgot your
+                                                password?</a>
+                                            <button id="signin">SIGN IN</button>
+
+                                            <a href="/" id="home" class="mb-3">Home</a>
                 </div>
             </form>
-
-            <a href="/" id="home" class="mb-3">Home</a> 
 
             <div id="registration-form">
                 <h1>Hello, Friend!</h1>
