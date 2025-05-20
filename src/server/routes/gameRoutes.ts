@@ -9,8 +9,14 @@ import {
 const router = express.Router();
 
 router.get("/start/:gameId", startGame);
-router.post("/draw", drawCard);
-router.post("/play", playCard);
+router.post("/draw", (req, res, next) => {
+  drawCard(req, res).catch(next);
+});
+
+router.post("/play", (req, res, next) => {
+  playCard(req, res).catch(next);
+});
+
 router.get("/turn/:gameId", checkTurn);
 
 export default router;
