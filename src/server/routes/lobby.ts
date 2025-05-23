@@ -10,13 +10,13 @@ router.get("/lobby", authenticate, async (req, res) => {
   const error_existing_game_message = req.flash("error_existing_game_message");
 
   const results = await pool.query(`
-    SELECT 
-      games.*, 
-      users.name AS creator_name 
-    FROM public.games 
-    JOIN public.users 
-      ON games.creator_id = users.id
-  `);
+  SELECT 
+    "Game".*, 
+    users.name AS creator_name 
+  FROM "Game"
+  JOIN users 
+    ON "Game".creator_id = users.id
+`);
 
   const games = results.rows;
 
