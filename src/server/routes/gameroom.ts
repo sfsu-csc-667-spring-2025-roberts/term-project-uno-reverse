@@ -1,11 +1,26 @@
 import { authenticate } from "./authentication";
 import { Router } from "express";
 const router = Router();
+import pool from "../config/db";
 
 // route for gameroom.html
-router.get("/gameroom/:gameId", authenticate, (req, res) => {
+router.get("/gameroom/:gameId", authenticate, async (req, res) => {
   const page_name = "Game Room";
-  res.render("gameroom", { page_name });
+  const gameId = req.params.gameId;
+
+  const result = await pool.query(
+    `
+    SELECT users.name
+    FROM players
+    JOIN users ON players.user_id = users.id
+    WHERE players.game_id = $1
+  `,
+    [gameId]
+  );
+
+  const playerName = result.rows.map((row) => row.name);
+
+  res.render("gameroom", { page_name, gameId, playerName });
 });
 
 router.post("/declare-uno", (req, res) => {
