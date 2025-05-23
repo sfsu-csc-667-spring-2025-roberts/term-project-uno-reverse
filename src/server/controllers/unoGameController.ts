@@ -3,7 +3,10 @@ import pool from "../config/db";
 
 // Helper to get current player turn
 async function getCurrentPlayer(gameId: number) {
-  const gameRes = await pool.query("SELECT turn_order FROM Game WHERE id = $1", [gameId]);
+  const gameRes = await pool.query(
+    "SELECT turn_order FROM Game WHERE id = $1",
+    [gameId]
+  );
   return gameRes.rows[0]?.turn_order ?? 0;
 }
 
@@ -14,15 +17,21 @@ export async function startGame(req: Request, res: Response) {
   try {
     // Get shuffled deck
     const cardRes = await pool.query("SELECT id FROM Card ORDER BY RANDOM()");
-    const cardIds = cardRes.rows.map(row => row.id);
+    const cardIds = cardRes.rows.map((row) => row.id);
 
     // Insert cards into GameDeck
     for (let i = 0; i < cardIds.length; i++) {
-      await pool.query("INSERT INTO GameDeck (game_id, card_id) VALUES ($1, $2)", [gameId, cardIds[i]]);
+      await pool.query(
+        "INSERT INTO GameDeck (game_id, card_id) VALUES ($1, $2)",
+        [gameId, cardIds[i]]
+      );
     }
 
     // Set the top card to start
-    await pool.query("UPDATE Game SET card_id = $1, status = 'active' WHERE id = $2", [cardIds[0], gameId]);
+    await pool.query(
+      "UPDATE Game SET card_id = $1, status = 'active' WHERE id = $2",
+      [cardIds[0], gameId]
+    );
 
     res.status(200).json({ message: "Game started successfully" });
   } catch (error) {
@@ -47,7 +56,10 @@ export async function drawCard(req: Request, res: Response) {
 
     const cardId = deckRes.rows[0].card_id;
 
-    await pool.query("INSERT INTO Hand (player_id, card_id) VALUES ($1, $2)", [playerId, cardId]);
+    await pool.query("INSERT INTO Hand (player_id, card_id) VALUES ($1, $2)", [
+      playerId,
+      cardId,
+    ]);
 
     res.status(200).json({ message: "Card drawn", cardId });
   } catch (error) {
@@ -61,7 +73,9 @@ export async function playCard(req: Request, res: Response) {
   const { gameId, playerId, cardId } = req.body;
 
   try {
-    const gameRes = await pool.query("SELECT card_id FROM Game WHERE id = $1", [gameId]);
+    const gameRes = await pool.query("SELECT card_id FROM Game WHERE id = $1", [
+      gameId,
+    ]);
     const topCardId = gameRes.rows[0].card_id;
 
     const [topCard, playedCard] = await Promise.all([
@@ -79,10 +93,16 @@ export async function playCard(req: Request, res: Response) {
     }
 
     // Update top card
-    await pool.query("UPDATE Game SET card_id = $1 WHERE id = $2", [cardId, gameId]);
+    await pool.query("UPDATE Game SET card_id = $1 WHERE id = $2", [
+      cardId,
+      gameId,
+    ]);
 
     // Remove card from hand
-    await pool.query("DELETE FROM Hand WHERE player_id = $1 AND card_id = $2", [playerId, cardId]);
+    await pool.query("DELETE FROM Hand WHERE player_id = $1 AND card_id = $2", [
+      playerId,
+      cardId,
+    ]);
 
     res.status(200).json({ message: "Card played" });
   } catch (error) {

@@ -9,7 +9,6 @@ import registerRoutes from "./routes/register";
 import forgotRoutes from "./routes/forgot";
 import lobbyRoutes from "./routes/lobby";
 import gameRoomRoutes from "./routes/gameroom";
-import gameRoutes from "./routes/gameRoutes";
 import logoutRoutes from "./routes/logout";
 import profileRoutes from "./routes/profile";
 
@@ -30,8 +29,8 @@ const PORT = process.env.PORT || 3000;
 
 // logging
 app.use(morgan("dev"));
-app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(express.static(path.join(__dirname + "/views/public")));
 
 app.use(
@@ -62,9 +61,8 @@ app.use("/", logoutRoutes);
 app.use("/", registerRoutes);
 app.use("/", forgotRoutes);
 app.use("/", lobbyRoutes);
-app.use("/api/auth", authRoutes);
 app.use("/", gameRoomRoutes);
-app.use("/game", gameRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/", profileRoutes);
 
 // Test route
@@ -75,11 +73,6 @@ app.get("/", async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
-});
-
-// Middlewares
-app.use((_request, _response, next) => {
-  next(httpErrors(404));
 });
 
 app.use(timeMiddleware);
