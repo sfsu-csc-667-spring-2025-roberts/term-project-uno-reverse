@@ -85,7 +85,7 @@ router.post("/join", authenticate, async (req, res) => {
     ]);
 
     req.flash("success_game_creation", "Successfully joined the game.");
-    return res.redirect("/gameroom");
+    return res.redirect(`/gameroom/${gameId}`);
   } catch (error) {
     req.flash(
       "error_existing_game_message",
