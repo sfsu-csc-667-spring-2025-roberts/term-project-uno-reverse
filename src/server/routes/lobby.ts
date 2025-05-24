@@ -11,11 +11,11 @@ router.get("/lobby", authenticate, async (req, res) => {
 
   const results = await pool.query(`
   SELECT 
-    "Game".*, 
+    "games".*, 
     users.name AS creator_name 
-  FROM "Game"
+  FROM "games"
   JOIN users 
-    ON "Game".creator_id = users.id
+    ON "games".creator_id = users.id
 `);
 
   const games = results.rows;

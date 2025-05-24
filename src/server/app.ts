@@ -71,7 +71,7 @@ app.get("/", async (req, res) => {
   res.send(`PostgreSQL time is: ${result.rows[0].now}`);
 });
 
-httpServer.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
