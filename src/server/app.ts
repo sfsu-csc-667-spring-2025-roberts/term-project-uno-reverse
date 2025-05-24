@@ -22,10 +22,16 @@ import session from "express-session";
 import flash from "express-flash";
 import passport from "passport";
 import initialize from "./config/passportConfig";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import { socketSetUp } from "./routes/chat";
 
 const app = express();
 initialize(passport);
 const PORT = process.env.PORT || 3000;
+const server = createServer(app);
+const io = new Server(server);
+socketSetUp(io);
 
 // logging
 app.use(morgan("dev"));
@@ -71,7 +77,7 @@ app.get("/", async (req, res) => {
   res.send(`PostgreSQL time is: ${result.rows[0].now}`);
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 

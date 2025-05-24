@@ -18,7 +18,11 @@ router.get("/gameroom/:gameId", authenticate, async (req, res) => {
     [gameId]
   );
 
-  const playerName = result.rows.map((row) => row.name);
+  const currentUserId = (req.user as { id: number }).id;
+  const playerResult = await pool.query(`SELECT name FROM users WHERE id = $1`, [
+    currentUserId,
+  ]);
+  const playerName = playerResult.rows[0]?.name || "Unknown Player";
 
   res.render("gameroom", { page_name, gameId, playerName });
 });

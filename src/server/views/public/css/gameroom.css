@@ -272,3 +272,12 @@ body {
 .uno-btn:hover {
   background-color: gold;
 }
+
+#chat {
+  border: 1px solid #ccc;
+  padding: 10px;
+  height: 200px;
+  overflow-y: scroll;
+  background-color: #fefefe;
+  color: #191919;
+}

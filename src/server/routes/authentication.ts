@@ -18,5 +18,5 @@ export function forwardAuthenticated(
   if (!req.isAuthenticated()) {
     return next();
   }
-  res.redirect("/gameroom"); // Redirect authenticated users
+  res.redirect("/lobby"); // Redirect authenticated users
 }
