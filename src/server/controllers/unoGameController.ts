@@ -1,16 +1,15 @@
 import { Request, Response } from "express";
 import pool from "../config/db";
 
-// Helper to get current player turn
 async function getCurrentPlayer(gameId: number) {
   const gameRes = await pool.query("SELECT turn_order FROM games WHERE id = $1", [gameId]);
   return gameRes.rows[0]?.turn_order ?? 0;
 }
 
-// POST: Start a new game (shuffle, deal cards, set top card, set turn)
 export async function startGame(req: Request<{ gameId: string }>, res: Response) {
   const { gameId } = req.params;
   console.log("Start Game triggered for game ID:", gameId);
+
   try {
     const cardRes = await pool.query("SELECT id FROM card ORDER BY RANDOM()");
     const cardIds = cardRes.rows.map((row) => row.id);
@@ -26,6 +25,7 @@ export async function startGame(req: Request<{ gameId: string }>, res: Response)
     const players = playersRes.rows;
 
     let cardIndex = 0;
+
     for (const player of players) {
       for (let i = 0; i < 7; i++) {
         await pool.query("INSERT INTO hand (player_id, card_id) VALUES ($1, $2)", [
@@ -35,29 +35,26 @@ export async function startGame(req: Request<{ gameId: string }>, res: Response)
       }
     }
 
-// 5. Pick the first non-wild card from the deck as the top card
-let topCardId;
+    // Use the first number/action card as the initial top card
+    let topCardId: number | undefined;
 
-while (cardIndex < cardIds.length) {
-  const cardData = await pool.query("SELECT * FROM card WHERE id = $1", [cardIds[cardIndex]]);
-  const card = cardData.rows[0];
+    while (cardIndex < cardIds.length) {
+      const result = await pool.query("SELECT * FROM card WHERE id = $1", [cardIds[cardIndex]]);
+      const card = result.rows[0];
 
-  if (card.type === 'number' || card.type === 'action') {
-    topCardId = card.id;
-    cardIndex++;
-    break;
-  }
+      if (card.type === "number" || card.type === "action") {
+        topCardId = card.id;
+        cardIndex++;
+        break;
+      }
 
-  cardIndex++;
-}
+      cardIndex++;
+    }
 
-// 6. Set game to active and update top card and turn
-await pool.query(
-  "UPDATE games SET card_id = $1, status = 'active', turn_order = 1 WHERE id = $2",
-  [topCardId, gameId]
-);
-
-    
+    await pool.query(
+      "UPDATE games SET card_id = $1, status = 'active', turn_order = 1 WHERE id = $2",
+      [topCardId, gameId]
+    );
 
     res.redirect(`/gameroom/${gameId}`);
   } catch (error) {
@@ -66,27 +63,25 @@ await pool.query(
   }
 }
 
-// POST: Draw a card
 export async function drawCard(req: Request, res: Response) {
   const { gameId, playerId } = req.body;
 
   try {
-    const deckRes = await pool.query(
-      `SELECT gd.card_id FROM gamedeck gd LEFT JOIN hand h ON gd.card_id = h.card_id 
-       WHERE gd.game_id = $1 AND h.card_id IS NULL LIMIT 1`,
+    const result = await pool.query(
+      `SELECT gd.card_id FROM gamedeck gd
+       LEFT JOIN hand h ON gd.card_id = h.card_id
+       WHERE gd.game_id = $1 AND h.card_id IS NULL
+       LIMIT 1`,
       [gameId]
     );
 
-    if (deckRes.rows.length === 0) {
+    if (result.rows.length === 0) {
       return res.status(400).json({ error: "No more cards to draw" });
     }
 
-    const cardId = deckRes.rows[0].card_id;
+    const cardId = result.rows[0].card_id;
 
-    await pool.query("INSERT INTO hand (player_id, card_id) VALUES ($1, $2)", [
-      playerId,
-      cardId,
-    ]);
+    await pool.query("INSERT INTO hand (player_id, card_id) VALUES ($1, $2)", [playerId, cardId]);
 
     res.status(200).json({ message: "Card drawn", cardId });
   } catch (error) {
@@ -95,7 +90,6 @@ export async function drawCard(req: Request, res: Response) {
   }
 }
 
-// POST: Play a card from HTTP (already exists)
 export async function playCard(req: Request, res: Response) {
   const { gameId, playerId, cardId } = req.body;
 
@@ -104,33 +98,31 @@ export async function playCard(req: Request, res: Response) {
     res.status(200).json({ message: "Card played. Turn advanced." });
   } catch (error) {
     console.error("Error playing card:", error);
-    const errorMessage = error instanceof Error ? error.message : "Could not play card";
-    res.status(500).json({ error: errorMessage });
+    const message = error instanceof Error ? error.message : "Could not play card";
+    res.status(500).json({ error: message });
   }
 }
 
-// GET: Check whose turn it is
 export async function checkTurn(req: Request, res: Response) {
   const { gameId } = req.params;
 
   try {
-    const order = await getCurrentPlayer(Number(gameId));
-    res.status(200).json({ currentPlayer: order });
+    const currentPlayer = await getCurrentPlayer(Number(gameId));
+    res.status(200).json({ currentPlayer });
   } catch (error) {
     console.error("Error checking turn:", error);
     res.status(500).json({ error: "Could not check turn" });
   }
 }
 
-// ✅ Socket-compatible helper
 export async function playCardInGame(gameId: number, playerId: string, cardId: number) {
   const seatRes = await pool.query(
-    `SELECT seat_number FROM players WHERE game_id = $1 AND user_id = $2`,
+    "SELECT seat_number FROM players WHERE game_id = $1 AND user_id = $2",
     [gameId, playerId]
   );
   const seatNumber = seatRes.rows[0]?.seat_number;
 
-  const turnRes = await pool.query(`SELECT turn_order FROM games WHERE id = $1`, [gameId]);
+  const turnRes = await pool.query("SELECT turn_order FROM games WHERE id = $1", [gameId]);
   const currentTurn = turnRes.rows[0]?.turn_order;
 
   if (seatNumber !== currentTurn) throw new Error("Not your turn");
@@ -138,17 +130,20 @@ export async function playCardInGame(gameId: number, playerId: string, cardId: n
   const gameRes = await pool.query("SELECT card_id FROM games WHERE id = $1", [gameId]);
   const topCardId = gameRes.rows[0].card_id;
 
-  const [topCard, playedCard] = await Promise.all([
+  const [topCardRes, playedCardRes] = await Promise.all([
     pool.query("SELECT * FROM card WHERE id = $1", [topCardId]),
     pool.query("SELECT * FROM card WHERE id = $1", [cardId]),
   ]);
 
-  const valid =
-    topCard.rows[0].color === playedCard.rows[0].color ||
-    topCard.rows[0].value === playedCard.rows[0].value ||
-    playedCard.rows[0].type === "wild";
+  const topCard = topCardRes.rows[0];
+  const playedCard = playedCardRes.rows[0];
 
-  if (!valid) throw new Error("Invalid card play");
+  const isValid =
+    playedCard.type === "wild" ||
+    playedCard.color === topCard.color ||
+    playedCard.value === topCard.value;
+
+  if (!isValid) throw new Error("Invalid card play");
 
   await pool.query("DELETE FROM hand WHERE player_id = $1 AND card_id = $2", [
     playerId,
@@ -158,7 +153,7 @@ export async function playCardInGame(gameId: number, playerId: string, cardId: n
   await pool.query("UPDATE games SET card_id = $1 WHERE id = $2", [cardId, gameId]);
 
   const players = await pool.query(
-    `SELECT seat_number FROM players WHERE game_id = $1 ORDER BY seat_number`,
+    "SELECT seat_number FROM players WHERE game_id = $1 ORDER BY seat_number",
     [gameId]
   );
 
@@ -169,45 +164,47 @@ export async function playCardInGame(gameId: number, playerId: string, cardId: n
   await pool.query("UPDATE games SET turn_order = $1 WHERE id = $2", [nextSeat, gameId]);
 
   return {
-    newTopCard: playedCard.rows[0],
+    newTopCard: playedCard,
     nextTurnSeat: nextSeat,
   };
 }
 
 export async function drawCardForPlayer(gameId: number, playerId: string) {
-  const deckRes = await pool.query(
-    `SELECT gd.card_id FROM gamedeck gd 
-     LEFT JOIN hand h ON gd.card_id = h.card_id 
-     WHERE gd.game_id = $1 AND h.card_id IS NULL 
+  const result = await pool.query(
+    `SELECT gd.card_id FROM gamedeck gd
+     LEFT JOIN hand h ON gd.card_id = h.card_id
+     WHERE gd.game_id = $1 AND h.card_id IS NULL
      LIMIT 1`,
     [gameId]
   );
 
-  if (deckRes.rows.length === 0) {
+  if (result.rows.length === 0) {
     throw new Error("No more cards to draw");
   }
 
-  const cardId = deckRes.rows[0].card_id;
+  const cardId = result.rows[0].card_id;
 
-  await pool.query(
-    "INSERT INTO hand (player_id, card_id) VALUES ($1, $2)",
-    [playerId, cardId]
-  );
+  await pool.query("INSERT INTO hand (player_id, card_id) VALUES ($1, $2)", [playerId, cardId]);
 
-  const card = await pool.query("SELECT * FROM card WHERE id = $1", [cardId]);
-  return card.rows[0];
+  const cardRes = await pool.query("SELECT * FROM card WHERE id = $1", [cardId]);
+  return cardRes.rows[0];
 }
 
 export async function resetGame(req: Request, res: Response) {
   const { gameId } = req.params;
 
   try {
-    // Delete all hands and deck
-    await pool.query("DELETE FROM hand WHERE player_id IN (SELECT user_id FROM players WHERE game_id = $1)", [gameId]);
+    await pool.query(
+      "DELETE FROM hand WHERE player_id IN (SELECT user_id FROM players WHERE game_id = $1)",
+      [gameId]
+    );
+
     await pool.query("DELETE FROM gamedeck WHERE game_id = $1", [gameId]);
 
-    // Reset top card and turn
-    await pool.query("UPDATE games SET card_id = NULL, turn_order = 1, status = 'waiting' WHERE id = $1", [gameId]);
+    await pool.query(
+      "UPDATE games SET card_id = NULL, turn_order = 1, status = 'waiting' WHERE id = $1",
+      [gameId]
+    );
 
     res.redirect(`/gameroom/${gameId}`);
   } catch (error) {
@@ -215,5 +212,3 @@ export async function resetGame(req: Request, res: Response) {
     res.status(500).send("Could not reset game");
   }
 }
-
-

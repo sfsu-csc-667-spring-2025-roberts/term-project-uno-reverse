@@ -1,44 +1,46 @@
 import express from "express";
-import dotenv from "dotenv"; // moved up
-dotenv.config(); // ✅ called immediately after import
+import dotenv from "dotenv";
+dotenv.config();
 
+import path from "path";
+import http from "http";
+import { Server } from "socket.io";
+
+import morgan from "morgan";
+import session from "express-session";
+import flash from "express-flash";
+import passport from "passport";
+import cookieParser from "cookie-parser";
+
+import pool from "./config/db";
+import initialize from "./config/passportConfig";
+import { timeMiddleware } from "./middleware/time";
+import { registerGameHandlers } from "./socketHandlers/gameHandlers";
+
+// Route imports
 import authRoutes from "./routes/authRoutes";
 import indexRoutes from "./routes/landing";
 import loginRoutes from "./routes/login";
 import registerRoutes from "./routes/register";
 import forgotRoutes from "./routes/forgot";
+import logoutRoutes from "./routes/logout";
 import lobbyRoutes from "./routes/lobby";
 import gameRoomRoutes from "./routes/gameroom";
-import logoutRoutes from "./routes/logout";
 import profileRoutes from "./routes/profile";
 import gameRoutes from "./routes/gameRoutes";
-
-import path from "path";
-import httpErrors from "http-errors";
-import { timeMiddleware } from "./middleware/time";
-import morgan from "morgan";
-import cookieParser from "cookie-parser";
-import pool from "./config/db";
-import session from "express-session";
-import flash from "express-flash";
-import passport from "passport";
-import initialize from "./config/passportConfig";
-import { registerGameHandlers } from "./socketHandlers/gameHandlers";
-
 
 const app = express();
 initialize(passport);
 const PORT = process.env.PORT || 3000;
 
-// logging
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname + "/views/public")));
+app.use(express.static(path.join(__dirname, "views", "public")));
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "default-secret", // ✅ add fallback if missing
+    secret: process.env.SESSION_SECRET || "default-secret",
     resave: false,
     saveUninitialized: false,
   })
@@ -54,10 +56,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.set("views", path.join(process.cwd(), "src", "server", "views"));
-// EJS template
 app.set("view engine", "ejs");
 
-// Routes
+// Route handlers
 app.use("/", indexRoutes);
 app.use("/", loginRoutes);
 app.use("/", logoutRoutes);
@@ -69,15 +70,13 @@ app.use("/api/auth", authRoutes);
 app.use("/", profileRoutes);
 app.use("/", gameRoutes);
 
-// Test route
+// Test connection to DB
 app.get("/", async (req, res) => {
   const result = await pool.query("SELECT NOW()");
   res.send(`PostgreSQL time is: ${result.rows[0].now}`);
 });
 
-import http from "http";
-import { Server } from "socket.io";
-
+// WebSocket setup
 const httpServer = http.createServer(app);
 const io = new Server(httpServer);
 
@@ -104,12 +103,9 @@ io.on("connection", (socket) => {
   });
 });
 
-
-// ✅ Listen with httpServer instead of app
 httpServer.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
-
 
 app.use(timeMiddleware);
 

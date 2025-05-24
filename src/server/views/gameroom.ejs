@@ -45,10 +45,6 @@
       transform: translate(-50%, -50%);
     }
     #discard-pile { left: 60%; }
-    .turn-indicator {
-      text-align: center;
-      margin-top: 1rem;
-    }
     #chat-sidebar {
       transition: right 0.3s ease;
       right: 0;
@@ -78,13 +74,11 @@
         </form>
       <% } %>
       <form action="/games/<%= gameId %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this game?');">
-        <button class="btn btn-danger">Delete Game</button>
+        <button class="btn btn-danger mb-2">Delete Game</button>
       </form>
-
       <form action="/games/<%= gameId %>/reset" method="POST" onsubmit="return confirm('Are you sure you want to reset this game?');">
         <button class="btn btn-warning">Reset Game</button>
       </form>
-
     </div>
   <% } %>
 
@@ -94,16 +88,15 @@
         <p><strong><%= player.name %> (You)</strong></p>
         <% playerHand.forEach(card => { 
           const fileColor = card.color.charAt(0).toUpperCase() + card.color.slice(1).toLowerCase();
-          const fileValue = card.value.replace(' ', '_'); // e.g. Draw 2 → Draw_2
-     %>
-       <img 
-         src="/images/cards/<%= fileColor %>_<%= fileValue %>.jpg"
-         class="uno-card"
-         data-card-id="<%= card.id %>"
-         onclick="playCard('<%= card.id %>')" 
-       />
-     <% }) %>
-     
+          const fileValue = card.value.replace(' ', '_');
+        %>
+          <img 
+            src="/images/cards/<%= fileColor %>_<%= fileValue %>.jpg"
+            class="uno-card"
+            data-card-id="<%= card.id %>"
+            onclick="playCard('<%= card.id %>')" 
+          />
+        <% }) %>
       </div>
     <% } else if (player.seat_number === 2) { %>
       <div class="player-zone player-top">
@@ -128,14 +121,14 @@
       </div>
     <% } %>
   <% }) %>
+
   <% if (playerHand.length === 0) { %>
-    <p class="text-danger">You have no cards in your hand!</p>
+    <p class="text-danger text-center">You have no cards in your hand!</p>
   <% } %>
 
   <div id="draw-pile" onclick="drawCard()">
     <img src="/images/cards/UNOBack.jpg" class="card-back" alt="Draw Pile">
   </div>
-  
 
   <div id="discard-pile">
     <% if (topCard) { %>
@@ -143,7 +136,6 @@
     <% } %>
   </div>
 
-  <!-- Chat Sidebar -->
   <div id="chat-sidebar" class="position-absolute end-0 top-0 h-100 bg-dark p-3 text-white" style="width: 300px; z-index: 9999; overflow-y: auto;">
     <h5>Chat</h5>
     <div id="chat-box" style="height: 75vh; overflow-y: scroll; border: 1px solid #ccc; padding: 0.5rem; background-color: #111;"></div>
@@ -153,64 +145,36 @@
     </form>
   </div>
 
-  <script>
-    function playCard(cardId) {
-      socket.emit("play-card", {
-        roomId: "<%= gameId %>",
-        playerId: "<%= user.id %>",
-        cardId: cardId
-      });
-    }
-  
-    socket.on("card-played", ({ card, playerId }) => {
-      const discardPile = document.getElementById("discard-pile");
-      discardPile.innerHTML = `<img src="/images/cards/${card.color}_${card.value}.jpg" class="uno-card" alt="Top Card">`;
-  
-      if (playerId === "<%= user.id %>") {
-        // Optionally refresh the player's hand
-        location.reload(); // Simple way to reflect new hand state
-      }
-    });
-  </script>
-
-<script>
-  function drawCard() {
-    socket.emit("draw-card", {
-      roomId: "<%= gameId %>",
-      playerId: "<%= user.id %>"
-    });
-  }
-
-  socket.on("card-drawn", ({ card }) => {
-    // Option 1: Reload page to refresh hand
-    location.reload();
-
-    // Option 2 (advanced): Dynamically append new card image:
-    /*
-    const myZone = document.querySelector(".player-bottom");
-    const img = document.createElement("img");
-    img.src = `/images/cards/${card.color}_${card.value}.jpg`;
-    img.className = "uno-card";
-    img.setAttribute("onclick", `playCard(${card.id})`);
-    myZone.appendChild(img);
-    */
-  });
-
-  socket.on("draw-error", ({ error }) => {
-    alert("Error drawing card: " + error);
-  });
-</script>
-
-
-
-  <!-- Socket.io for Chat -->
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
     const roomId = "<%= gameId %>";
+    const playerId = "<%= user.id %>";
     const playerName = "<%= playerName %>";
 
     socket.emit("join-room", roomId);
+
+    function playCard(cardId) {
+      socket.emit("play-card", { roomId, playerId, cardId });
+    }
+
+    function drawCard() {
+      socket.emit("draw-card", { roomId, playerId });
+    }
+
+    socket.on("card-played", ({ card, playerId: playedBy }) => {
+      const discardPile = document.getElementById("discard-pile");
+      discardPile.innerHTML = `<img src="/images/cards/${card.color}_${card.value}.jpg" class="uno-card" alt="Top Card">`;
+      if (playedBy === playerId) location.reload();
+    });
+
+    socket.on("card-drawn", ({ card }) => {
+      location.reload();
+    });
+
+    socket.on("draw-error", ({ error }) => {
+      alert("Error drawing card: " + error);
+    });
 
     const chatForm = document.getElementById("chat-form");
     const chatInput = document.getElementById("chat-input");
@@ -235,16 +199,14 @@
     });
 
     const chatSidebar = document.getElementById("chat-sidebar");
-const toggleChatButton = document.getElementById("toggle-chat");
+    const toggleChatButton = document.getElementById("toggle-chat");
 
-toggleChatButton.addEventListener("click", () => {
-  chatSidebar.classList.toggle("d-none");
-
-  toggleChatButton.textContent = chatSidebar.classList.contains("collapsed")
-    ? "💬 Chat"
-    : "❌ Close Chat";
-});
-
+    toggleChatButton.addEventListener("click", () => {
+      chatSidebar.classList.toggle("d-none");
+      toggleChatButton.textContent = chatSidebar.classList.contains("d-none")
+        ? "💬 Chat"
+        : "❌ Close Chat";
+    });
   </script>
 </body>
 </html>

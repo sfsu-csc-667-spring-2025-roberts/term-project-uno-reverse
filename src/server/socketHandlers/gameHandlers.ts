@@ -1,8 +1,6 @@
 import { Server, Socket } from "socket.io";
 import { drawCardForPlayer, playCardInGame } from "../controllers/unoGameController";
 
-
-// Merged function to handle all game-related socket events
 export function registerGameHandlers(io: Server, socket: Socket) {
   socket.on("play-card", async ({ roomId, playerId, cardId }) => {
     try {
@@ -14,7 +12,7 @@ export function registerGameHandlers(io: Server, socket: Socket) {
         playerId,
       });
     } catch (error) {
-      console.error("❌ play-card error:", (error as Error).message);
+      console.error("play-card error:", (error as Error).message);
       socket.emit("card-error", { error: (error as Error).message });
     }
   });
@@ -26,9 +24,8 @@ export function registerGameHandlers(io: Server, socket: Socket) {
 
       socket.emit("card-drawn", { card: newCard });
     } catch (error) {
-      console.error("❌ draw-card error:", (error as Error).message);
+      console.error("draw-card error:", (error as Error).message);
       socket.emit("draw-error", { error: (error as Error).message });
     }
   });
 }
-

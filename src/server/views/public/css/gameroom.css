@@ -1,217 +1,35 @@
+/* Reset and box model setup */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
   height: 100%;
   font-family: 'Poppins', sans-serif;
-}
-
-body {
-  background-image: url('../images/back-image.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   overflow: hidden;
 }
 
-/* Layout container */
+/* Background and base styling */
+body {
+  background: radial-gradient(circle, #ff0000 0%, #000000 100%);
+  color: white;
+  position: relative;
+}
+
+/* Layout */
 .game-container {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: space-between; */
   height: 100vh;
   width: 100vw;
   padding: 10px;
-  box-sizing: border-box;
 }
 
-/* Player card rows */
-.top-row,
-.bottom-row {
-  width: 760px;
-  padding: 10px;
-  margin: auto;
-  box-sizing: content-box;
-  display: flex;
-  justify-content: center;
-  /* gap: 2px; */
-}
-
-.middle-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 65%;
-}
-
-.middle-row>.side-stack>.uno-card {
-  margin: -30px;
-}
-
-/* Center pile */
-.center-pile {
-  flex: 1;
-
-}
-
-.uno-btn {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #fff;
-  background: #e63946;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 30px;
-  margin-top: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: background 0.2s;
-}
-
-.uno-btn:hover {
-  background: #ff595e;
-}
-
-
-#player1,
-#player2,
-#discard-pile {
-  width: 800px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  padding: 10px;
-  box-sizing: content-box;
-}
-
-#player3,
-#player4 {
-  height: 700px;
-  width: 300px;
-}
-
-#discard-pile {
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#player1>div,
-#player2>div {
-  width: 120px;
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#player1,
-#player2,
-#player3,
-#player4 {
-  box-sizing: content-box;
-}
-
-#player3>div,
-#player4>div {
-  height: 300px;
-  height: 110px;
-}
-
-.player-zone {
-  overflow: visible;
-}
-
-
-/* UNO Cards */
-.uno-card {
-  width: 100px;
-  object-fit: contain;
-  border-radius: 10px;
-  margin: -10px;
-}
-
-.side-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 15%;
-}
-#chat-sidebar {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 300px;
-  z-index: 9999;
-  background-color: #111;
-  transition: right 0.3s ease;
-}
-
-#chat-sidebar.collapsed {
-  right: -300px;
-}
-
-.side-rotate {
-  transform: rotate(270deg);
-}
-
-.reverse {
-  transform: rotate(90deg);
-}
-
-/* Buttons */
-.game-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 10px 0px 20px 0px;
-}
-
-/* Settings Modal Booklet Frame */
-.booklet-frame {
-  border: 6px solid #6e4b28;
-  background: #fffdf8;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-}
-
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  background: radial-gradient(circle, #ff0000 0%, #000000 100%);
-  color: white;
-  overflow: hidden;
-  height: 100vh;
-  position: relative;
-}
-
-.card-back {
-  width: 60px;
-  margin-left: -40px; /* overlap effect */
-  z-index: 1;
-}
-
-.card-back:hover {
-  z-index: 1000;
-  transform: translateY(-10px);
-}
-
-
-.uno-card {
-  width: 70px;
-  height: auto;
-  margin: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
+/* Player zones */
 .player {
   position: absolute;
   display: flex;
@@ -252,6 +70,26 @@ body {
   flex-direction: column;
 }
 
+/* Card visuals */
+.uno-card {
+  width: 70px;
+  height: auto;
+  margin: 5px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-back {
+  width: 60px;
+  margin-left: -40px;
+  z-index: 1;
+}
+
+.card-back:hover {
+  z-index: 1000;
+  transform: translateY(-10px);
+}
+
 .left-card,
 .right-card {
   width: 70px;
@@ -268,6 +106,11 @@ body {
   transform: rotate(-90deg);
 }
 
+.pile-uno-card {
+  width: 60px;
+}
+
+/* Discard and draw pile layout */
 #discard-pile {
   position: absolute;
   top: 50%;
@@ -279,15 +122,63 @@ body {
   gap: 8px;
 }
 
-.pile-uno-card {
-  width: 60px;
+/* Side stacks (left/right) */
+.side-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 15%;
 }
 
-#uno-form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 120%);
+.middle-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 65%;
+}
+
+.middle-row > .side-stack > .uno-card {
+  margin: -30px;
+}
+
+/* Player zones */
+#player1, #player2, #discard-pile {
+  width: 800px;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+}
+
+#player3, #player4 {
+  height: 700px;
+  width: 300px;
+}
+
+#player1 > div,
+#player2 > div {
+  width: 120px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#player3 > div,
+#player4 > div {
+  height: 110px;
+}
+
+.player-zone {
+  overflow: visible;
+}
+
+/* Buttons */
+.game-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 10px 0 20px 0;
 }
 
 .uno-btn {
@@ -298,8 +189,49 @@ body {
   color: black;
   border: none;
   border-radius: 8px;
+  transition: background-color 0.2s;
 }
 
 .uno-btn:hover {
   background-color: gold;
+}
+
+#uno-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 120%);
+}
+
+/* Chat sidebar */
+#chat-sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 300px;
+  background-color: #111;
+  z-index: 9999;
+  transition: right 0.3s ease;
+}
+
+#chat-sidebar.collapsed {
+  right: -300px;
+}
+
+/* Utility transforms */
+.side-rotate {
+  transform: rotate(270deg);
+}
+
+.reverse {
+  transform: rotate(90deg);
+}
+
+/* Settings modal frame */
+.booklet-frame {
+  border: 6px solid #6e4b28;
+  background: #fffdf8;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
 }
