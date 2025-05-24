@@ -35,7 +35,6 @@ router.get("/gameroom/:gameId", authenticate, async (req, res) => {
       `,
       [userId, gameId]
     );
-    
     const playerHand = handRes.rows;
 
     // 5. Determine if it's this user's turn
@@ -46,6 +45,10 @@ router.get("/gameroom/:gameId", authenticate, async (req, res) => {
     const seatNumber = seatRes.rows[0]?.seat_number;
     const isMyTurn = game.turn_order === seatNumber;
 
+    // 6. Get player name for chat
+    const playerResult = await pool.query("SELECT name FROM users WHERE id = $1", [userId]);
+    const playerName = playerResult.rows[0]?.name || "Unknown Player";
+
     res.render("gameroom", {
       page_name: "Game Room",
       gameId,
@@ -54,7 +57,8 @@ router.get("/gameroom/:gameId", authenticate, async (req, res) => {
       playerHand,
       topCard,
       isMyTurn,
-      user: req.user
+      user: req.user,
+      playerName
     });
   } catch (error) {
     console.error("Error loading game room:", error);
@@ -62,5 +66,8 @@ router.get("/gameroom/:gameId", authenticate, async (req, res) => {
   }
 });
 
-export default router;
+router.post("/declare-uno", (req, res) => {
+  res.redirect("/gameroom");
+});
 
+export default router;

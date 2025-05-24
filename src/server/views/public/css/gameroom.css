@@ -144,6 +144,20 @@ body {
   justify-content: center;
   width: 15%;
 }
+#chat-sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 300px;
+  z-index: 9999;
+  background-color: #111;
+  transition: right 0.3s ease;
+}
+
+#chat-sidebar.collapsed {
+  right: -300px;
+}
 
 .side-rotate {
   transform: rotate(270deg);

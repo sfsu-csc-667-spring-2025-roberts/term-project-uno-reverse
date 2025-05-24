@@ -73,9 +73,38 @@ app.get("/", async (req, res) => {
   res.send(`PostgreSQL time is: ${result.rows[0].now}`);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+import http from "http";
+import { Server } from "socket.io";
+
+const httpServer = http.createServer(app);
+const io = new Server(httpServer);
+
+io.on("connection", (socket) => {
+  console.log("✅ A user connected");
+
+  socket.on("join-room", (roomId) => {
+    socket.join(roomId);
+    console.log(`🟢 User joined room: ${roomId}`);
+  });
+
+  socket.on("chat-message", ({ roomId, message, sender }) => {
+    io.to(roomId).emit("chat-message", {
+      message,
+      sender,
+      timestamp: Date.now(),
+    });
+  });
+
+  socket.on("disconnect", () => {
+    console.log("🔌 User disconnected");
+  });
 });
+
+// ✅ Listen with httpServer instead of app
+httpServer.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
+});
+
 
 app.use(timeMiddleware);
 
