@@ -6,7 +6,8 @@ const router = Router();
 
 router.get("/gameroom/:gameId", authenticate, async (req, res) => {
   const userId = (req.user as { id: number }).id;
-  const gameId = req.params.gameId;
+  const gameId = parseInt(req.params.gameId);
+
 
   try {
     // 1. Get all players with seat and name
@@ -30,11 +31,11 @@ router.get("/gameroom/:gameId", authenticate, async (req, res) => {
       SELECT c.*
       FROM hand h
       JOIN card c ON h.card_id = c.id
-      JOIN players p ON h.player_id = p.id
-      WHERE p.user_id = $1 AND p.game_id = $2
+      WHERE h.player_id = $1
       `,
-      [userId, gameId]
+      [userId]
     );
+    
     const playerHand = handRes.rows;
 
     // 5. Determine if it's this user's turn

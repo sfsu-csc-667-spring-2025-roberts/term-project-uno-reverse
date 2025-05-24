@@ -4,8 +4,11 @@ import {
   startGame,
   drawCard,
   playCard,
-  checkTurn
+  checkTurn,
+  resetGame
 } from "../controllers/unoGameController";
+
+
 
 const router = express.Router();
 
@@ -20,6 +23,8 @@ router.post("/games/:gameId/start", authenticate, async (req, res) => {
     res.status(500).send("Could not start game");
   }
 });
+
+router.post("/games/:gameId/reset", authenticate, resetGame);
 
 
 router.post("/draw", (req, res, next) => {

@@ -3,3 +3,7 @@
 
 # Ignore Node.js dependencies
 node_modules/
+
+MyKey.txt
+MyKey.txt.pub
+# Ignore build output

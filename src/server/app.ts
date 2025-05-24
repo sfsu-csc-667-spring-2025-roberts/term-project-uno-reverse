@@ -23,6 +23,8 @@ import session from "express-session";
 import flash from "express-flash";
 import passport from "passport";
 import initialize from "./config/passportConfig";
+import { registerGameHandlers } from "./socketHandlers/gameHandlers";
+
 
 const app = express();
 initialize(passport);
@@ -95,10 +97,13 @@ io.on("connection", (socket) => {
     });
   });
 
+  registerGameHandlers(io, socket);
+
   socket.on("disconnect", () => {
     console.log("🔌 User disconnected");
   });
 });
+
 
 // ✅ Listen with httpServer instead of app
 httpServer.listen(PORT, () => {
