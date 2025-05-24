@@ -124,6 +124,11 @@ body {
   height: 110px;
 }
 
+.player-zone {
+  overflow: visible;
+}
+
+
 /* UNO Cards */
 .uno-card {
   width: 100px;
@@ -173,6 +178,18 @@ body {
   height: 100vh;
   position: relative;
 }
+
+.card-back {
+  width: 60px;
+  margin-left: -40px; /* overlap effect */
+  z-index: 1;
+}
+
+.card-back:hover {
+  z-index: 1000;
+  transform: translateY(-10px);
+}
+
 
 .uno-card {
   width: 70px;
@@ -271,13 +288,4 @@ body {
 
 .uno-btn:hover {
   background-color: gold;
-}
-
-#chat {
-  border: 1px solid #ccc;
-  padding: 10px;
-  height: 200px;
-  overflow-y: scroll;
-  background-color: #fefefe;
-  color: #191919;
 }

@@ -11,6 +11,7 @@ import lobbyRoutes from "./routes/lobby";
 import gameRoomRoutes from "./routes/gameroom";
 import logoutRoutes from "./routes/logout";
 import profileRoutes from "./routes/profile";
+import gameRoutes from "./routes/gameRoutes";
 
 import path from "path";
 import httpErrors from "http-errors";
@@ -22,16 +23,10 @@ import session from "express-session";
 import flash from "express-flash";
 import passport from "passport";
 import initialize from "./config/passportConfig";
-import { createServer } from "http";
-import { Server } from "socket.io";
-import { socketSetUp } from "./routes/chat";
 
 const app = express();
 initialize(passport);
 const PORT = process.env.PORT || 3000;
-const server = createServer(app);
-const io = new Server(server);
-socketSetUp(io);
 
 // logging
 app.use(morgan("dev"));
@@ -70,6 +65,7 @@ app.use("/", lobbyRoutes);
 app.use("/", gameRoomRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/", profileRoutes);
+app.use("/", gameRoutes);
 
 // Test route
 app.get("/", async (req, res) => {
@@ -77,7 +73,7 @@ app.get("/", async (req, res) => {
   res.send(`PostgreSQL time is: ${result.rows[0].now}`);
 });
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 

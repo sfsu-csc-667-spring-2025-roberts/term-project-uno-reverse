@@ -1,279 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Uno Game Room</title>
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
-
-  <!-- FastBootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" />
-
+  <link rel="stylesheet" href="/css/gameroom.css" />
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
       background: radial-gradient(circle, #ff0000 0%, #000000 100%);
       color: white;
-      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
       height: 100vh;
-      position: relative;
+      overflow: hidden;
     }
-
-    .uno-card {
-      width: 70px;
-      height: auto;
-      margin: 2px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .player {
+    .player-zone {
       position: absolute;
       display: flex;
-      justify-content: center;
       align-items: center;
+      overflow: visible;
     }
-
-    .player-row {
-      width: 100%;
-      flex-direction: row;
+    .player-top { top: 10px; left: 50%; transform: translateX(-50%); flex-direction: row; }
+    .player-bottom { bottom: 10px; left: 50%; transform: translateX(-50%); flex-direction: row; }
+    .player-left { top: 50%; left: 10px; transform: translateY(-50%) rotate(-90deg); transform-origin: left center; flex-direction: row; }
+    .player-right { top: 50%; right: 10px; transform: translateY(-50%) rotate(90deg); transform-origin: right center; flex-direction: row; }
+    .card-back {
+      width: 60px;
+      margin-left: -40px;
+      z-index: 1;
     }
-
-    .player-col {
-      height: 100%;
-      flex-direction: column;
+    .card-back:hover {
+      z-index: 1000;
+      transform: translateY(-10px);
     }
-
-    .player-top {
-      top: 10px;
-      left: 0;
-      transform: rotate(360deg);
-    }
-
-    .player-bottom {
-      bottom: 10px;
-      left: 0;
-    }
-
-    .player-left {
-      top: 0;
-      left: 10px;
-      flex-direction: column;
-    }
-
-    .player-right {
-      top: 0;
-      right: 10px;
-      flex-direction: column;
-      transform: rotate(180deg);
-    }
-
-    .left-card,
-    .right-card {
-      width: 70px;
+    .uno-card {
+      width: 60px;
       height: auto;
-      margin: -13px;
-      transform-origin: center center;
-      position: relative;
-      left: 40px;
+      margin: 2px;
     }
-
-    .left-card {
-      transform: rotate(90deg);
-    }
-
-    .right-card {
-      transform: rotate(-90deg);
-    }
-
-    #discard-pile {
+    #draw-pile, #discard-pile {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
     }
-
-    .pile-uno-card {
-      width: 60px;
-    }
-
-    #uno-form {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, 120%);
-    }
-
-    .uno-btn {
-      font-weight: bold;
-      font-size: 1.2rem;
-      padding: 10px 20px;
-      background-color: yellow;
-      color: black;
-      border: none;
-      border-radius: 8px;
-    }
-
-    .uno-btn:hover {
-      background-color: gold;
-    }
-
-    #chat {
-      border: 1px solid #ccc;
-      padding: 10px;
-      height: 200px;
-      overflow-y: scroll;
-      width: 400px;
-      background-color: #fefefe;
-      color: #191919;
-      margin-right: 100px;
-    }
-
-    #chat-container {
-      height: 100vh;
-      width: 100vw;
-      display: flex;
-      flex-direction: column;
-      align-items: end;
-      justify-content: end;
-    }
-
-    #message {
-      width: 340px;
-    }
-
-    #wrapper {
-      margin-bottom: 20px;
-      background-color: #000000;
-      width: 420px;
-      position: absolute;
-      bottom: 0;
-      background: #eee;
-      padding: 10px;
-      left: 1400px;
-    }
-
-    #wrapper>#form>#submit {
-      background-color: #ff0000;
-      color: #fefefe;
-      border: none;
+    #discard-pile { left: 60%; }
+    .turn-indicator {
+      text-align: center;
+      margin-top: 1rem;
     }
   </style>
 </head>
-
 <body>
-
-  <audio autoplay loop>
-    <source src="/music/ziggy.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-  <div class="container">
-
-    <!-- Player 1 (Bottom) -->
-    <div class="player player-bottom player-row">
-      <img src="/images/cards/Blue_2.jpg" class="uno-card" alt="Card">
-      <img src="/images/cards/Blue_2.jpg" class="uno-card" alt="Card">
-      <img src="/images/cards/Blue_2.jpg" class="uno-card" alt="Card">
-      <img src="/images/cards/Blue_2.jpg" class="uno-card" alt="Card">
-      <img src="/images/cards/Blue_2.jpg" class="uno-card" alt="Card">
-      <img src="/images/cards/Blue_2.jpg" class="uno-card" alt="Card">
-      <img src="/images/cards/Blue_2.jpg" class="uno-card" alt="Card">
-    </div>
-
-    <!-- Player 2 (Top) -->
-    <div class="player player-top player-row">
-      <img src="/images/cards/Green_1.jpg" class="uno-card" alt="Card">
-      <img src="/images/cards/Green_1.jpg" class="uno-card" alt="Card">
-      <img src="/images/cards/Green_1.jpg" class="uno-card" alt="Card">
-      <img src="/images/cards/Green_1.jpg" class="uno-card" alt="Card">
-      <img src="/images/cards/Green_1.jpg" class="uno-card" alt="Card">
-      <img src="/images/cards/Green_1.jpg" class="uno-card" alt="Card">
-      <img src="/images/cards/Green_1.jpg" class="uno-card" alt="Card">
-    </div>
-
-    <!-- Player 3 (Left) -->
-    <div class="player player-left player-col">
-      <img src="/images/cards/Yellow_1.jpg" class="left-card" alt="Card">
-      <img src="/images/cards/Yellow_1.jpg" class="left-card" alt="Card">
-      <img src="/images/cards/Yellow_1.jpg" class="left-card" alt="Card">
-      <img src="/images/cards/Yellow_1.jpg" class="left-card" alt="Card">
-      <img src="/images/cards/Yellow_1.jpg" class="left-card" alt="Card">
-      <img src="/images/cards/Yellow_1.jpg" class="left-card" alt="Card">
-      <img src="/images/cards/Yellow_1.jpg" class="left-card" alt="Card">
-    </div>
-
-    <!-- Player 4 (Right) -->
-    <div class="player player-right player-col">
-      <img src="/images/cards/Red_1.jpg" class="right-card" alt="Card">
-      <img src="/images/cards/Red_1.jpg" class="right-card" alt="Card">
-      <img src="/images/cards/Red_1.jpg" class="right-card" alt="Card">
-      <img src="/images/cards/Red_1.jpg" class="right-card" alt="Card">
-      <img src="/images/cards/Red_1.jpg" class="right-card" alt="Card">
-      <img src="/images/cards/Red_1.jpg" class="right-card" alt="Card">
-      <img src="/images/cards/Red_1.jpg" class="right-card" alt="Card">
-    </div>
-
-    <!-- Discard Pile -->
-    <div id="discard-pile">
-      <img src="/images/cards/Green_1.jpg" class="pile-uno-card" alt="Card">
-      <img src="/images/cards/Yellow_1.jpg" class="pile-uno-card" alt="Card">
-      <img src="/images/cards/Blue_2.jpg" class="pile-uno-card" alt="Card">
-    </div>
-
-    <!-- UNO Button -->
-    <form id="uno-form" action="/declare-uno" method="POST">
-      <button type="submit" class="uno-btn">UNO!</button>
-    </form>
-
+  <a href="/lobby" class="btn btn-outline-light position-absolute top-0 start-0 m-3">← Lobby</a>
+  <div class="position-absolute top-50 start-50 translate-middle text-center" style="margin-top: -150px; z-index: 10;">
+    <% if (isMyTurn) { %>
+      <h4 class="text-success">✅ Your Turn!</h4>
+    <% } else { %>
+      <h4 class="text-warning">⏳ Waiting for your turn...</h4>
+    <% } %>
   </div>
 
-  <div id="wrapper">
-    <div id="chat"></div>
-    <form id="form">
-      <input type="text" id="message" placeholder="Type a message..." autocomplete="off" required />
-      <button type="submit" id="submit">Send</button>
-    </form>
+  <% if (user && game && user.id === game.creator_id) { %>
+    <div class="position-absolute bottom-0 start-0 m-3 d-flex flex-column align-items-start">
+      <% if (game.status === 'waiting') { %>
+        <form action="/games/<%= gameId %>/start" method="POST">
+          <button class="btn btn-success mb-2">Start Game</button>
+        </form>
+      <% } %>
+      <form action="/games/<%= gameId %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this game?');">
+        <button class="btn btn-danger">Delete Game</button>
+      </form>
+    </div>
+  <% } %>
+
+  <% players.forEach(player => { %>
+    <% if (player.user_id === user.id) { %>
+      <div class="player-zone player-bottom">
+        <p><strong><%= player.name %> (You)</strong></p>
+        <% playerHand.forEach(card => { %>
+          <img src="/images/cards/<%= card.color %>_<%= card.value %>.jpg" class="uno-card" />
+        <% }) %>
+      </div>
+    <% } else if (player.seat_number === 2) { %>
+      <div class="player-zone player-top">
+        <p><strong><%= player.name %></strong></p>
+        <% for (let i = 0; i < 7; i++) { %>
+          <img src="/images/cards/UNOBack.jpg" class="card-back" />
+        <% } %>
+      </div>
+    <% } else if (player.seat_number === 3) { %>
+      <div class="player-zone player-left">
+        <p><strong><%= player.name %></strong></p>
+        <% for (let i = 0; i < 7; i++) { %>
+          <img src="/images/cards/UNOBack.jpg" class="card-back" />
+        <% } %>
+      </div>
+    <% } else if (player.seat_number === 4) { %>
+      <div class="player-zone player-right">
+        <p><strong><%= player.name %></strong></p>
+        <% for (let i = 0; i < 7; i++) { %>
+          <img src="/images/cards/UNOBack.jpg" class="card-back" />
+        <% } %>
+      </div>
+    <% } %>
+  <% }) %>
+
+  <div id="draw-pile">
+    <img src="/images/cards/UNOBack.jpg" class="card-back" alt="Draw Pile">
   </div>
 
-
-
-
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    const socket = io();
-
-    const gameId = "<%= gameId %>";
-    const playerName = "<%= playerName %>";
-
-    socket.emit("join_game", { gameId, playerName });
-
-    document.getElementById("form").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const msg = document.getElementById("message").value;
-      socket.emit("message", { gameId, playerName, message: msg });
-      document.getElementById("message").value = "";
-    });
-
-    socket.on("message", ({ playerName, message }) => {
-      const chatBox = document.getElementById("chat");
-      const p = document.createElement("p");
-      p.textContent = `${playerName}: ${message}`;
-      chatBox.appendChild(p);
-    });
-  </script>
-
-
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <div id="discard-pile">
+    <% if (topCard) { %>
+      <img src="/images/cards/<%= topCard.color %>_<%= topCard.value %>.jpg" class="uno-card" alt="Top Card">
+    <% } %>
+  </div>
 </body>
-
 </html>

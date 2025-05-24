@@ -72,12 +72,28 @@
                     <%= game.name %>
                   </h5>
                   <p>
-                    <strong>Players:</strong>
-
+                    
                     <strong>Admin:</strong>
                     <%= game.creator_name %>
+                    <strong>Players:</strong>
+                    <ul class="mb-2">
+                      <% (playersByGame[game.id] || []).forEach(player => { %>
+                        <li style="font-size: 0.9em;"><%= player %></li>
+                      <% }) %>
+                    </ul>
+                    
                   </p>
                 </div>
+
+                <% if (joinedGameIds.includes(game.id)) { %>
+                  <form action="/gameroom/<%= game.id %>" method="GET">
+                    <div class="match-action mt-1">
+                      <button class="btn btn-join">Rejoin</button>
+                    </div>
+                  </form>
+                <% } %>
+
+                
                 <form action="/join" method="POST">
                   <input type="hidden" name="gameId" value="<%= game.id %>">
                   <div class="match-action">
